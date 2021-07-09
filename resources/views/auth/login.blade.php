@@ -8,7 +8,7 @@
           <div class="card-group">
             <div class="card p-4">
               <div class="card-body">
-                <h1>Ingresar a CUTE</h1>
+                <h1>Ingresar a CURE</h1>
                 <p class="text-muted">Anunciese para acceder en su cuenta</p>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
