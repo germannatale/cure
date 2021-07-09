@@ -12,7 +12,8 @@
 */
 
 Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', function () {           return view('dashboard.homepage'); });
+    Route::get('/', function () {           return view('dashboard.home'); });
+    Route::get('/simulacion', function () {           return view('dashboard.simulador'); });
 
     Route::group(['middleware' => ['role:dev']], function () {
         Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -58,24 +59,8 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::get('/badge', function(){    return view('dashboard.notifications.badge'); });
             Route::get('/modals', function(){   return view('dashboard.notifications.modals'); });
         });
-        Route::resource('notes', 'NotesController');
-    });
-    Auth::routes();
-
-    Route::resource('resource/{table}/resource', 'ResourceController')->names([
-        'index'     => 'resource.index',
-        'create'    => 'resource.create',
-        'store'     => 'resource.store',
-        'show'      => 'resource.show',
-        'edit'      => 'resource.edit',
-        'update'    => 'resource.update',
-        'destroy'   => 'resource.destroy'
-    ]);
-
-    Route::group(['middleware' => ['role:dev']], function () {
         Route::resource('bread',  'BreadController');   //create BREAD (resource)
-        Route::resource('users',        'UsersController')->except( ['create', 'store'] );
-        Route::resource('roles',        'RolesController');
+        
         Route::resource('mail',        'MailController');
         Route::get('prepareSend/{id}',        'MailController@prepareSend')->name('prepareSend');
         Route::post('mailSend/{id}',        'MailController@send')->name('mailSend');
@@ -117,5 +102,22 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::post('/file/cropp',      'MediaController@cropp');
             Route::get('/file/copy',        'MediaController@fileCopy')->name('media.file.copy');
         });
+        Route::resource('notes', 'NotesController');
+    });
+    Auth::routes();
+
+    Route::resource('resource/{table}/resource', 'ResourceController')->names([
+        'index'     => 'resource.index',
+        'create'    => 'resource.create',
+        'store'     => 'resource.store',
+        'show'      => 'resource.show',
+        'edit'      => 'resource.edit',
+        'update'    => 'resource.update',
+        'destroy'   => 'resource.destroy'
+    ]);
+
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::resource('users',        'UsersController')->except( ['create', 'store'] );
+        Route::resource('roles',        'RolesController');
     });
 });

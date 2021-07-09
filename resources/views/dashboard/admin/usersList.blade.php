@@ -5,21 +5,20 @@
         <div class="container-fluid">
           <div class="animated fadeIn">
             <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+              <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                      <i class="fa fa-align-justify"></i>{{ __('Users') }}</div>
+                      <h4><i class="fas fa-users"></i> Usuarios</h4>
+                    </div>
                     <div class="card-body">
-                        <table class="table table-responsive-sm table-striped">
+                        <table class="table table-striped datatable">
                         <thead>
                           <tr>
-                            <th>Username</th>
+                            <th>Nombre</th>
                             <th>E-mail</th>
                             <th>Roles</th>
-                            <th>Email verified at</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>Verificado</th>
+                            <th>Acciones</th>                            
                           </tr>
                         </thead>
                         <tbody>
@@ -29,18 +28,14 @@
                               <td>{{ $user->email }}</td>
                               <td>{{ $user->menuroles }}</td>
                               <td>{{ $user->email_verified_at }}</td>
-                              <td>
-                                <a href="{{ url('/users/' . $user->id) }}" class="btn btn-block btn-primary">View</a>
-                              </td>
-                              <td>
-                                <a href="{{ url('/users/' . $user->id . '/edit') }}" class="btn btn-block btn-primary">Edit</a>
-                              </td>
-                              <td>
-                                @if( $you->id !== $user->id )
+                              <td class="float-right">
                                 <form action="{{ route('users.destroy', $user->id ) }}" method="POST">
+                                <a href="{{ url('/users/' . $user->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>                             
+                                <a href="{{ url('/users/' . $user->id . '/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>                              
+                                @if( $you->id !== $user->id )                               
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-block btn-danger">Delete User</button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                                 @endif
                               </td>

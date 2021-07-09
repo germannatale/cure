@@ -1,6 +1,6 @@
         <!-- Breadcrumb-->
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">Inicio</a></li>
             <?php $segments = ''; ?>
             @for($i = 1; $i <= count(Request::segments()); $i++)
                 <?php $segments .= '/'. Request::segment($i); ?>
