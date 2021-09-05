@@ -14,6 +14,8 @@
                     Atque cupiditate consectetur a nihil sapiente nisi dolor perspiciatis! Ipsam, labore. Minima unde ex possimus. 
                     Odit.Voluptates voluptatum modi necessitatibus inventore.
                 </p>
+
+                <a href="{{route('simulador.resultados')}}" class="btn btn-primary mb-3"><i class="fas fa-bolt"></i> Simular Consumo</a>
                 
                 <div id="accordion">
                     <div class="card mb-0">
@@ -34,7 +36,7 @@
                                         <th>Artefacto</th>                                        
                                         <th>Energia</th>
                                         <th>Consumo</th>                                        
-                                        <th>Acciones</th>                                
+                                        <th class="text-right">Acciones</th>                                
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,9 +45,9 @@
                                         <td>Lampara LED 5W</td>
                                         <td>Electrica</td>
                                         <td>5W</td>
-                                        <td class="float-right">
-                                            <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                                                <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>                                        
+                                        <td class="text-right">
+                                            <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                                <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>                                        
                                                 <a href="#" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
@@ -54,9 +56,9 @@
                                     <td>TV LED 50 pulgadas</td>
                                     <td>Electrica</td>
                                     <td>85 W/h</td>
-                                    <td class="float-right">
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>                                        
+                                    <td class="text-right">
+                                        <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>                                        
                                             <a href="#" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                   </tr>
@@ -65,9 +67,9 @@
                                     <td>Estufa Tiro Balanceado 4500 calorias</td>
                                     <td>Gas</td>
                                     <td>0.48 m3/h</td>
-                                    <td class="float-right">
-                                        <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                                            <a href="#" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>                                        
+                                    <td class="text-right">
+                                        <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>                                        
                                             <a href="#" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
                                     </td>
                                   </tr>
@@ -162,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary mt-3"><i class="fas fa-bolt"></i> Simular Consumo</button>
+                
             </div>
         </div>
       </div>

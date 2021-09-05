@@ -11,7 +11,7 @@
           <div class="card-header"><h4><i class="fas fa-user-tag"></i> Roles</h4></div>
             <div class="card-body">
                 
-                    <a class="btn btn-primary" href="{{ route('roles.create') }}">Nuevo Rol</a>
+                    <a class="btn btn-success" href="{{ route('roles.create') }}"><i class="fas fa-plus"></i> Nuevo Rol</a>
                 
                 <br>
                 <div class="table" style="padding-top: 20px">
@@ -22,7 +22,7 @@
                                 <th>Jerarquía</th>
                                 <th>Creado</th>
                                 <th>Actualizado</th>
-                                <th>Acciones</th>                                
+                                <th class="text-right">Acciones</th>                                
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +40,7 @@
                                     <td>
                                         {{ $role->updated_at }}
                                     </td>
-                                    <td class="float-right">
+                                    <td class="text-right">
                                         <form action="{{ route('roles.destroy', $role->id ) }}" method="POST">
                                             @method('DELETE')
                                             @csrf
@@ -50,8 +50,8 @@
                                             <a class="btn btn-sm btn-success" href="{{ route('roles.down', ['id' => $role->id]) }}">
                                                 <i class="fas fa-chevron-down"></i>  
                                             </a>
-                                            <a href="{{ route('roles.show', $role->id ) }}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                                            <a href="{{ route('roles.edit', $role->id ) }}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('roles.show', $role->id ) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('roles.edit', $role->id ) }}" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>
                                         
                                             <button class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></button>
                                         </form>

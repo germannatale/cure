@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +16,13 @@
 
 Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {           return view('dashboard.home'); });
-    Route::get('/simulacion', function () {           return view('dashboard.simulador'); });
+    Route::get('/simulacion', function () {           return view('dashboard.simulacion.simulador'); });
+    Route::get('/simulacion/resultados', function () {           return view('dashboard.simulacion.resultados'); })->name('simulador.resultados');
+    Route::get('/inmuebles', function () {           return view('dashboard.inmuebles.index'); });
+    Route::get('/proveedores', function () {           return view('dashboard.proveedores.index'); });
+    Route::get('/proveedores/1/cuadro-tarifario/1', function () {           return view('dashboard.proveedores.cuadro-tarifario'); })->name('proveedores.cuadro-tarifario');
+    Route::get('/artefactos/electrico', function () {           return view('dashboard.artefactos.electrico'); });
+    Route::get('/artefactos/gas', function () {           return view('dashboard.artefactos.gas'); });
 
     Route::group(['middleware' => ['role:dev']], function () {
         Route::get('/colors', function () {     return view('dashboard.colors'); });
