@@ -46,8 +46,8 @@
             <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
               <div class="card-body text-center">
                 <div>
-                  <h2>Registrarse en CUTE</h2>
-                  <p>Desde aquí podra crear un nuevo usuario para acceder al sistema. Revise su correo electronico luego de accerlo para validar su identidad.</p>
+                  <h2>Registrarse en CURE</h2>
+                  <p>Desde aquí podra crear un nuevo usuario para acceder al sistema. Un email llegara a su correo electronico para validar su identidad.</p>
                   @if (Route::has('password.request'))
                     <a href="{{ route('register') }}" class="btn btn-primary active mt-3">Registrarse</a>
                   @endif

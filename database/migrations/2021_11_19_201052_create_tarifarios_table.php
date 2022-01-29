@@ -18,9 +18,11 @@ class CreateTarifariosTable extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->bigInteger('proveedor_id')->unsigned();
+            $table->bigInteger('localidad_id')->unsigned();
             $table->timestamps();
-            //FKs
-            $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            //FKs            
+            $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');
+            $table->foreign('localidad_id')->references('id')->on('localidades')->onDelete('cascade');
         });
     }
 
