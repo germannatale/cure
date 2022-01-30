@@ -9,31 +9,32 @@
             if(isset($appMenus['top menu'])){
                 FreelyPositionedMenus::render( $appMenus['top menu'] , 'c-header-', 'd-md-down-none');
             }
-        ?>  
-        <ul class="c-header-nav ml-auto mr-4">
-          <li class="c-header-nav-item d-md-down-none mx-2">
-            <a class="c-header-nav-link">
-              <svg class="c-icon"><use xlink:href="{{ url('/icons/sprites/free.svg#cil-bell') }}"></use></svg>
-            </a>
-          </li>         
-          <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/avatars/9.jpg') }}" alt="user@email.com"></div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right pt-0">
-              <div class="dropdown-header bg-light py-2"><strong>Mi Cuenta</strong></div><a class="dropdown-item" href="#">
-                
-                <a href="#" class="dropdown-item"><i class="fas fa-user pr-2"></i>Mi Perfil</a>
-                <a href="#" class="dropdown-item"><i class="fas fa-cogs pr-2"></i>Configuración</a>
-                {{-- Si el usuario esta logueado, se muestra el boton de cerrar sesion --}}
-                @auth
+        ?>
+        {{-- Opciones de Usuario (visible solo logueado) --}}
+        @auth 
+          <ul class="c-header-nav ml-auto mr-4">
+            <li class="c-header-nav-item d-md-down-none mx-2">
+              <a class="c-header-nav-link">
+                <svg class="c-icon"><use xlink:href="{{ url('/icons/sprites/free.svg#cil-bell') }}"></use></svg>
+              </a>
+            </li>         
+            <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="c-avatar"><img class="c-avatar-img" src="{{ url('/assets/img/avatars/9.jpg') }}" alt="user@email.com"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right pt-0">
+                <div class="dropdown-header bg-light py-2"><strong>Mi Cuenta</strong></div><a class="dropdown-item" href="#">
+                  
+                  <a href="#" class="dropdown-item"><i class="fas fa-user pr-2"></i>Mi Perfil</a>
+                  <a href="#" class="dropdown-item"><i class="fas fa-cogs pr-2"></i>Configuración</a>  
                   <form method="POST" action="{{ route('logout') }}"> @csrf
                     <button class="dropdown-item"><i class="fas fa-sign-out-alt pr-2"></i> Cerrar Sesión</button>
                   </form>
-                @endauth                  
 
-            </div>
-          </li>
-        </ul>
+              </div>
+            </li>
+          </ul>
+        @endauth
+        
         <div class="c-subheader px-3">
           <ol class="breadcrumb border-0 m-0">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
