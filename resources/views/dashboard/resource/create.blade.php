@@ -10,9 +10,9 @@
 <div class="container-fluid">
   <div class="fade-in">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-12 col-md-6">
         <div class="card">
-          <div class="card-header"><h4>Add {{ $form->name }}</h4></div>
+          <div class="card-header"><h4>Agregar nuevo {{ $form->name }}</h4></div>
             <div class="card-body">
                 @if(Session::has('message'))
                     <div class="row">
@@ -31,7 +31,7 @@
                     </div>
                 @endif
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
                         <form method="POST" action="{{ route('resource.store', $form->id) }}" enctype="multipart/form-data">
                             @csrf
                             @foreach($columns as $column)
@@ -61,16 +61,21 @@
                                         echo '<label class="form-check-label">no</label>';
                                         echo '</div>';
                                     }else{
+                                        echo '<div class="form-group">';
                                         echo '<label>' . $column->name . '</label>';
                                         echo '<input type="' . $column->type . '" class="form-control" name="' . $column->column_name . '">';
-                                    }
+                                        echo '</div>';
+                                    }                                
                                 }elseif($column->type == 'relation_select'){
+                                    echo '<div class="form-group">';
                                     echo '<label>' . $column->name . '</label>';
                                     echo '<select name="' . $column->column_name . '" class="form-control">';
+                                    // aca deberia ir el if nullable con el option en blanco
                                     foreach($relations['relation_' . $column->column_name] as $relation){
                                         echo '<option value="' . $relation->id . '">' . $relation->name . '</option>';
                                     }
                                     echo '</select>';
+                                    echo '</div>';
                                 }elseif($column->type == 'relation_radio'){
                                     echo '<label class="mt-3">' . $column->name . '</label>';
                                     foreach($relations['relation_' . $column->column_name] as $relation){
@@ -97,13 +102,13 @@
                                 type="submit"
                                 class="btn btn-primary mt-3"
                             >
-                                Save
+                                Guardar
                             </button>
                             <a 
                                 href="{{ route('resource.index', $form->id) }}"
-                                class="btn btn-primary mt-3"
+                                class="btn btn-secondary mt-3"
                             >
-                                Return
+                                Volver
                             </a>
                         </form>
                     </div>

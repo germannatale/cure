@@ -19,7 +19,7 @@ class CreateProveedoresTable extends Migration
             $table->string('direccion');
             $table->bigInteger('localidad_id')->unsigned();
             $table->string('cuit');
-            $table->string('tipo_energia');
+            $table->string('energia_id');
             $table->string('email');
             $table->timestamps();
             //FKs

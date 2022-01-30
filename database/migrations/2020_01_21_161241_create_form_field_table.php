@@ -24,6 +24,7 @@ class CreateFormFieldTable extends Migration
             $table->boolean('add');
             $table->string('relation_table')->nullable();
             $table->string('relation_column')->nullable();
+            $table->string('validation')->nullable();
             $table->integer('form_id')->unsigned();
             $table->string('column_name');
         });

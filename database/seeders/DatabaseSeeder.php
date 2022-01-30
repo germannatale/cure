@@ -16,7 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersSeeder::class,
             MenusTableSeeder::class,
-            FolderTableSeeder::class,            
+            FolderTableSeeder::class,
+            LocalidadesSeeder::class, 
+            EnergiaSeeder::class,
+            ProveedoresSeeder::class,
             //BREADSeeder::class,           
         ]);
     }
