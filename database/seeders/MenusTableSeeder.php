@@ -137,17 +137,19 @@ class MenusTableSeeder extends Seeder
             'name' => 'sidebar menu'
         ]);
         $this->menuId = DB::getPdo()->lastInsertId();  //set menuId
-        $this->insertLink('user,estudiante,admin,dev', 'Inicio', '/', 'cil-home');
+        $this->insertLink('user,estudiante,admin,dev', 'Inicio', '/', 'fas fa-home');
         $this->insertTitle('admin,dev', 'Administración');
-        $this->insertLink('admin,dev', 'Usuarios',                   '/users', 'cil-user');
-        $this->insertLink('admin,dev', 'Roles',              '/roles', 'cil-cog');
-        $this->insertLink('admin,dev', 'Proveedores',              '/provedoores', 'cil-building');
+        $this->insertLink('admin,dev', 'Usuarios',                   '/users', 'fas fa-user');
+        $this->insertLink('admin,dev', 'Roles',              '/roles', 'fas fa-user-tag');
+        $this->insertTitle('admin,dev', 'Recursos');
+        $this->insertLink('admin,dev', 'Localidades',              '/resource/1/resource', 'fas fa-city');
+        $this->insertLink('admin,dev', 'Proveedores',              '/resource/2/resource', 'fas fa-industry');
         $this->insertTitle('user,estudiante,admin,dev', 'Simulador');
-        $this->insertLink('user,estudiante,admin,dev', 'Inmuebles', '/inmuebles', 'cil-house');
-        $this->insertLink('user,estudiante,admin,dev', 'Artefactos', '/artefactos', 'cil-tv');
-        $this->insertLink('user,estudiante,admin,dev', 'Simulación', '/simulacion', 'cil-bolt');
+        $this->insertLink('user,estudiante,admin,dev', 'Inmuebles', '/inmuebles', 'fas fa-house-user');
+        $this->insertLink('user,estudiante,admin,dev', 'Artefactos', '/artefactos', 'fas fa-lightbulb');
+        $this->insertLink('user,estudiante,admin,dev', 'Simulación', '/simulacion', 'fas fa-calculator');
 
-        $this->insertLink('admin,dev', 'Panel', '/', 'cil-speedometer');
+        $this->insertLink('admin,dev', 'Panel', '/', 'fas fa-tachometer-alt');
         $this->beginDropdown('dev', 'Settings', 'cil-calculator');
             $this->insertLink('dev', 'Notes',                   '/notes');
            
@@ -158,8 +160,8 @@ class MenusTableSeeder extends Seeder
             $this->insertLink('dev', 'BREAD',                   '/bread');
             $this->insertLink('dev', 'Email',                   '/mail');
         $this->endDropdown();
-        $this->insertLink('guest', 'Ingresar', '/login', 'cil-account-logout');
-        $this->insertLink('guest', 'Registrarse', '/register', 'cil-account-logout');
+        $this->insertLink('guest', 'Ingresar', '/login', 'fas fa-sign-in-alt');
+        $this->insertLink('guest', 'Registrarse', '/register', 'fas fa-user-plus');
         $this->insertTitle('dev', 'Theme');
         $this->insertLink('dev', 'Colors', '/colors', 'cil-drop1');
         $this->insertLink('dev', 'Typography', '/typography', 'cil-pencil');
