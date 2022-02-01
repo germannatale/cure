@@ -19,7 +19,12 @@ class DatabaseSeeder extends Seeder
             FolderTableSeeder::class,
             LocalidadesSeeder::class, 
             EnergiaSeeder::class,
+            CategoriaLuzSeeder::class,
+            SubcategoriaLuzSeeder::class,
+            CategoriaGasSeeder::class,
+            SubcategoriaGasSeeder::class,
             ProveedoresSeeder::class,
+            TarifarioSeeder::class,
             //BREADSeeder::class,           
         ]);
     }

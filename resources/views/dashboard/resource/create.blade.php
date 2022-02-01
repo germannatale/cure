@@ -63,16 +63,20 @@
                                     }else{
                                         echo '<div class="form-group">';
                                         echo '<label>' . $column->name . '</label>';
-                                        echo '<input type="' . $column->type . '" class="form-control" name="' . $column->column_name . '">';
-                                        echo '</div>';
+                                        echo '<input type="' . $column->type . '" class="form-control" name="' . $column->column_name . '" value="'. old($column->column_name) .'">';
+                                        echo '</div>';                                       
                                     }                                
                                 }elseif($column->type == 'relation_select'){
                                     echo '<div class="form-group">';
                                     echo '<label>' . $column->name . '</label>';
-                                    echo '<select name="' . $column->column_name . '" class="form-control">';
-                                    // aca deberia ir el if nullable con el option en blanco
+                                    echo '<select name="' . $column->column_name . '" class="form-control">';                                    
                                     foreach($relations['relation_' . $column->column_name] as $relation){
-                                        echo '<option value="' . $relation->id . '">' . $relation->name . '</option>';
+                                        //echo '<option value="' . $relation->id . '">' . $relation->name . '</option>';
+                                        if($relation->id == old($column->column_name)){
+                                                echo '<option selected value="' . $relation->id . '">' . $relation->name . '</option>';
+                                            }else{
+                                                echo '<option value="' . $relation->id . '">' . $relation->name . '</option>';
+                                        }
                                     }
                                     echo '</select>';
                                     echo '</div>';
@@ -91,7 +95,7 @@
                                 }elseif($column->type == 'text_area'){
                                     echo '<div class="form-group row">';
                                     echo '<label class="col-form-label">' . $column->name . '</label>';
-                                    echo '<textarea class="form-control" name="' . $column->column_name . '" rows="9"></textarea>';
+                                    echo '<textarea class="form-control" name="' . $column->column_name . '" rows="9" value="'. old($column->column_name) .'"></textarea>';
                                     echo '</div>';
                                 }else{
                                     echo '<p>Not recognize field type: ' . $column->type . '</p>';

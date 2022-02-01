@@ -139,14 +139,17 @@ class MenusTableSeeder extends Seeder
         $this->menuId = DB::getPdo()->lastInsertId();  //set menuId
         $this->insertLink('user,estudiante,admin,dev', 'Inicio', '/', 'fas fa-home');
         $this->insertTitle('admin,dev', 'Administración');
-        $this->insertLink('admin,dev', 'Usuarios',                   '/users', 'fas fa-user');
-        $this->insertLink('admin,dev', 'Roles',              '/roles', 'fas fa-user-tag');
+        $this->insertLink('admin,dev', 'Usuarios','/users', 'fas fa-user');
+        $this->insertLink('admin,dev', 'Roles','/roles', 'fas fa-user-tag');
         $this->insertTitle('admin,dev', 'Recursos');
-        $this->insertLink('admin,dev', 'Localidades',              '/resource/1/resource', 'fas fa-city');
-        $this->insertLink('admin,dev', 'Proveedores',              '/resource/2/resource', 'fas fa-industry');
+        $this->insertLink('admin,dev', 'Localidades','/resource/1/resource', 'fas fa-city');
+        $this->insertLink('admin,dev', 'Proveedores','/resource/2/resource', 'fas fa-industry');
+        $this->insertLink('admin,dev', 'Tarifario','/resource/3/resource', 'fas fa-table');
+        $this->insertLink('admin,dev', 'Tarifas','/resource/4/resource', 'fas fa-dollar-sign');
+        $this->insertLink('admin,dev', 'Artefacto Tipo','/resource/5/resource', 'far fa-lightbulb');
         $this->insertTitle('user,estudiante,admin,dev', 'Simulador');
         $this->insertLink('user,estudiante,admin,dev', 'Inmuebles', '/inmuebles', 'fas fa-house-user');
-        $this->insertLink('user,estudiante,admin,dev', 'Artefactos', '/artefactos', 'fas fa-lightbulb');
+        $this->insertLink('user,estudiante,admin,dev', 'Artefactos', '/resource/6/resource', 'fas fa-lightbulb');
         $this->insertLink('user,estudiante,admin,dev', 'Simulación', '/simulacion', 'fas fa-calculator');
 
         $this->insertLink('admin,dev', 'Panel', '/', 'fas fa-tachometer-alt');
