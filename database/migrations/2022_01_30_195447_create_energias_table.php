@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnergiaTable extends Migration
+class CreateEnergiasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEnergiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('energia', function (Blueprint $table) {
+        Schema::create('energias', function (Blueprint $table) {
             $table->string('id');
             $table->string('nombre');
             $table->timestamps();

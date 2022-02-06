@@ -5,13 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SubcategoriaGas extends Model
+class SubcategoriaGas extends Subcategoria
 {
     use HasFactory;
 
-    protected $table = 'subcategoria_gas';
+    // Scope para filtrar por energia
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('gas', function ($query) {
+            return $query->where('energia_id', 'gas');
+        });
 
-    protected $fillable = [
-        'nombre',        
-    ];
+    }
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->energia_id = 'gas';
+    }
+   
+
 }

@@ -144,9 +144,10 @@ class MenusTableSeeder extends Seeder
         $this->insertTitle('admin,dev', 'Recursos');
         $this->insertLink('admin,dev', 'Localidades','/resource/1/resource', 'fas fa-city');
         $this->insertLink('admin,dev', 'Proveedores','/resource/2/resource', 'fas fa-industry');
-        $this->insertLink('admin,dev', 'Tarifario','/resource/3/resource', 'fas fa-table');
-        $this->insertLink('admin,dev', 'Tarifas','/resource/4/resource', 'fas fa-dollar-sign');
-        $this->insertLink('admin,dev', 'Artefacto Tipo','/resource/5/resource', 'far fa-lightbulb');
+        $this->insertLink('admin,dev', 'Categorías','/resource/3/resource', 'fas fa-sitemap');
+        $this->insertLink('admin,dev', 'Subcategorías','/resource/4/resource', 'fas fa-sitemap');
+        $this->insertLink('admin,dev', 'Tarifario','/resource/5/resource', 'fas fa-table');
+        $this->insertLink('admin,dev', 'Artefacto Tipo','/resource/6/resource', 'far fa-lightbulb');
         $this->insertTitle('user,estudiante,admin,dev', 'Simulador');
         $this->insertLink('user,estudiante,admin,dev', 'Inmuebles', '/inmuebles', 'fas fa-house-user');
         $this->insertLink('user,estudiante,admin,dev', 'Artefactos', '/resource/6/resource', 'fas fa-lightbulb');

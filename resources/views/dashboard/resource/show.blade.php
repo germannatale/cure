@@ -47,8 +47,11 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-
+            </div>
+            {{-- Relacion Tarifario - Tarifas --}}
+            @if ($form->name == 'Tarifario')                
+                @include('dashboard.resource.relation.tarifas')
+            @endif
         </div>
     </div>
 </div>

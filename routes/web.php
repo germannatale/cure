@@ -130,3 +130,7 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('roles',        'RolesController');
     });
 });
+
+//Tarifas
+Route::any('/tarifas/store', 'TarifaController@store')->name('tarifas.store');
+Route::any('/tarifas/{id}/destroy', 'TarifaController@destroy')->name('tarifas.destroy');

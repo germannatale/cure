@@ -15,11 +15,10 @@ class CreateTarifariosTable extends Migration
     {
         Schema::create('tarifarios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
             $table->bigInteger('proveedor_id')->unsigned();
             $table->bigInteger('localidad_id')->unsigned();
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin')->nullable();            
             $table->timestamps();
             //FKs            
             $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');

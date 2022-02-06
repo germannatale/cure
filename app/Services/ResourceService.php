@@ -11,6 +11,8 @@ use App\Models\Form;
 use App\Models\Models;
 use App\Models\Folder;
 use Illuminate\Support\Facades\DB;
+use PhpParser\JsonDecoder;
+use Illuminate\Support\Carbon as Carbon;
 
 class ResourceService{
 
@@ -79,12 +81,20 @@ class ResourceService{
                     'table' =>  $column->relation_table,
                     'column' => $name,
                     'thisTableColumn' => $column->column_name,
+                    //agrego si es requerida la relacion
+                    'required' => $column->validation ? str_contains($column->validation, 'required') : false
                 ));
             }
         }
         foreach($relations as $relation){
             $result['relation_' . $relation['thisTableColumn']] = DB::table($relation['table'])->select('id', $relation['column'] . ' AS name')->get();
-        }
+            if (!$relation['required']){
+                //agrego un objeto vacio al select si acepta nulos
+                $vacio = (object) array('id' => '', 'name' => '');
+                $result['relation_' . $relation['thisTableColumn']]->prepend($vacio);
+                 
+            }
+        }       
         return $result;
     }
 
@@ -158,8 +168,11 @@ class ResourceService{
                 $toInsert[ $column->column_name ] = $this->addMedia($request, $column->column_name);
             }else{
                 $toInsert[ $column->column_name ] = $request[$column->column_name];
-            }
+            }           
         }
+        //agrego timestamps
+        $toInsert[ "created_at" ] = Carbon::now(); # new \Datetime()
+        $toInsert[ "updated_at" ] = Carbon::now(); # new \Datetime()
         DB::table($tableName)->insert($toInsert);
     }
 
@@ -211,12 +224,14 @@ class ResourceService{
                 }
             }
         }
+        //agrego timestamps       
+        $updateArray[ "updated_at" ] = Carbon::now(); # new \Datetime()
         DB::table($tableName)->where('id', '=', $tableId)->update( $updateArray );
     }
 
     public function show($formId, $tableName, $tableId){
         $form = Form::find($formId);
-        $formFields = FormField::where('form_id', '=', $formId)->where('browse', '=', '1')->get();
+        $formFields = FormField::where('form_id', '=', $formId)->where('read', '=', '1')->get();
         $indexes = array();
         $relations = array();
         foreach($formFields as $field){

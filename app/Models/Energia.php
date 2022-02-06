@@ -9,10 +9,16 @@ class Energia extends Model
 {
     use HasFactory;
 
-    protected $table = 'energia';
+    protected $table = 'energias';
 
     protected $fillable = [
         'id',
         'nombre'
     ];
+
+    public function getUnidadAttribute()
+    {       
+        return $this->id == 'luz' ? 'kWh' : 'm3';        
+    }
+
 }

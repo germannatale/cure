@@ -17,7 +17,6 @@ class ProveedoresSeeder extends Seeder
      */
     public function run()
     {
-
         // Resource Proveedor           
         DB::table('form')->insert([
             'name' => 'Proveedor',
@@ -42,9 +41,9 @@ class ProveedoresSeeder extends Seeder
             'column_name' => 'nombre'
         ]);  
         DB::table('form_field')->insert([
-            'name' => 'Localidad',            
+            'name' => 'Localidad',           
             // Relacion con Localidad
-            'type' => 'relation_select',    
+            'type' => 'relation_select',
             'relation_table' => 'localidades',
             'relation_column' => 'nombre',
             // Fin Relacion con Localidad            
@@ -57,7 +56,7 @@ class ProveedoresSeeder extends Seeder
         ]);      
         DB::table('form_field')->insert([
             'name' => 'Direccion',
-            'validation' => 'max:255',
+            'validation' => 'nullable|max:255',
             'type' => 'text',
             'browse' => 1,
             'read' => 1,
@@ -68,7 +67,7 @@ class ProveedoresSeeder extends Seeder
         ]);
         DB::table('form_field')->insert([
             'name' => 'CUIT',
-            'validation' => 'numeric|digits:11',
+            'validation' => 'nullable|numeric|digits:11',
             'type' => 'text',
             'browse' => 1,
             'read' => 1,
@@ -82,7 +81,7 @@ class ProveedoresSeeder extends Seeder
             'validation' => 'required',
             // Relacion con Energia
             'type' => 'relation_select',    
-            'relation_table' => 'energia',
+            'relation_table' => 'energias',
             'relation_column' => 'nombre',
             // Fin Relacion con Energia
             'browse' => 1,
@@ -94,7 +93,7 @@ class ProveedoresSeeder extends Seeder
         ]);
         DB::table('form_field')->insert([
             'name' => 'Email',
-            'validation' => 'email',
+            'validation' => 'nullable|email',
             'type' => 'text',
             'browse' => 1,
             'read' => 1,
