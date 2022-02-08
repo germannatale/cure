@@ -63,7 +63,7 @@
       @include('dashboard.shared.header')
 
       <div class="c-body">
-
+        @include('dashboard.shared.mensajes')
         <main class="c-main">
 
           @yield('content') 

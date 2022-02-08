@@ -13,23 +13,7 @@
       <div class="col-12 col-md-6">
         <div class="card">
           <div class="card-header"><h4>Editar {{ $form->name }}</h4></div>
-            <div class="card-body">
-                @if(Session::has('message'))
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
-                        </div>
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+            <div class="card-body">               
                 <div class="row">
                     <div class="col-12">
 
