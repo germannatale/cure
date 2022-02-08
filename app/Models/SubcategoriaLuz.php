@@ -14,7 +14,7 @@ class SubcategoriaLuz extends Subcategoria
     {
         parent::boot();
         static::addGlobalScope('luz', function ($query) {
-            return $query->where('energia_id', 'luz');
+            return $query->where('energia_id', 1);
         });
 
     }
@@ -22,7 +22,7 @@ class SubcategoriaLuz extends Subcategoria
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->energia_id = 'luz';
+        $this->energia_id = 1;
     }
 
     

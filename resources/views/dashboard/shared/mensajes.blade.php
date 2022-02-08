@@ -67,7 +67,7 @@
             </a>
         </div>
         @endforeach                                    
-    @else                                    
+    @else
         <div class="alert alert-danger alert-dismissible fade show mb-0">            
             <i class="fa fa-times-circle"> </i>
             {!! session()->get('error') !!}
@@ -75,5 +75,5 @@
                 <span aria-hidden="true">&times;</span>
             </a>
         </div>
-    @endif    
+    @endif
 @endif

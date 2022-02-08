@@ -14,7 +14,7 @@ class SubcategoriaGas extends Subcategoria
     {
         parent::boot();
         static::addGlobalScope('gas', function ($query) {
-            return $query->where('energia_id', 'gas');
+            return $query->where('energia_id', 2);
         });
 
     }
@@ -22,7 +22,7 @@ class SubcategoriaGas extends Subcategoria
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->energia_id = 'gas';
+        $this->energia_id = 2;
     }
    
 

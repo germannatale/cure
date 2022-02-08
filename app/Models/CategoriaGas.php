@@ -14,7 +14,7 @@ class CategoriaGas extends Categoria
     {
         parent::boot();
         static::addGlobalScope('gas', function ($query) {
-            return $query->where('energia_id', 'gas');
+            return $query->where('energia_id', 2);
         });
 
     }
@@ -22,7 +22,7 @@ class CategoriaGas extends Categoria
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->energia_id = 'gas';
+        $this->energia_id = 2;
     }
    
    

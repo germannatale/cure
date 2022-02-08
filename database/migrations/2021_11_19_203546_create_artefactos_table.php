@@ -17,14 +17,15 @@ class CreateArtefactosTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->bigInteger('artefacto_tipo_id')->unsigned();            
-            $table->string('energia');
+            $table->string('energia_id');
             $table->float('consumo_hora');
             $table->float('horas_uso_prom');
-            $table->bigInteger('ambiente_id')->unsigned();
+            $table->float('calor_residual')->nullable();           
+            $table->bigInteger('user_id')->unsigned()->nullable();
             $table->timestamps();
             // FKs
-            $table->foreign('artefacto_tipo_id')->references('id')->on('artefacto_tipos');
-            $table->foreign('ambiente_id')->references('id')->on('ambientes')->onDelete('cascade')->nulleable();
+            $table->foreign('artefacto_tipo_id')->references('id')->on('artefacto_tipos');            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

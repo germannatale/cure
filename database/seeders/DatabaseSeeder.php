@@ -27,6 +27,9 @@ class DatabaseSeeder extends Seeder
             CategoriaGasSeeder::class,
             SubcategoriaGasSeeder::class,            
             TarifarioSeeder::class,
+            ArtefactoSeeder::class,
+            ArtefactoTipo::class,
+            MisArtefactosSeeder::class,
             //BREADSeeder::class,           
         ]);
     }

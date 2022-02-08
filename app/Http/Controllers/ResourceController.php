@@ -125,14 +125,27 @@ class ResourceController extends Controller
         foreach($formFields as $formField){            
             if ($formField->validation){               
                 $toValidate[$formField->column_name] = $formField->validation;
-            }
+            }            
             //dump($formField->column_name . ': ' .$formField->validation);            
-        }              
+        }
+
+        // -----------------------------------------------------------------------      
+        // -------------- Ojo chanchada para filtrar por user_id -----------------
+        // -----------------------------------------------------------------------
+       
+        if ($request->has('user_id') && $form->name != "Artefactos Genericos"){
+            $request['user_id'] = Auth::user()->id;
+        }
+
+        // -----------------------------------------------------------------------
+        // --------------- Fin chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
         $request->validate($toValidate);
         if($form->add == 1){
             $resourceService = new ResourceService();
             $resourceService->add($form->id, $form->table_name, $request->all() );
-            $request->session()->flash('message', $form->name . ' fue agregado correctamente');
+            $request->session()->flash('exito', $form->name . ' fue agregado correctamente');
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -257,7 +270,7 @@ class ResourceController extends Controller
         if($form->edit == 1){
             $resourceService = new ResourceService();
             $resourceService->update($form->table_name, $table, $id, $request->all() );
-            $request->session()->flash('message', $form->name . ' actualizado correctamente.');
+            $request->session()->flash('exito', $form->name . ' actualizado correctamente.');
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -293,7 +306,7 @@ class ResourceController extends Controller
         if($form->delete == 1){
             if($request->has('marker')){
                 DB::table($form->table_name)->where('id', '=', $id)->delete();
-                $request->session()->flash('message', $form->name . ' fue eliminado correctamente.');
+                $request->session()->flash('exito', $form->name . ' fue eliminado correctamente.');
                 return redirect()->route('resource.index', $table);
             }else{
                 return view('dashboard.resource.delete', ['table' => $table, 'id' => $id, 'formName' => $form->name]);

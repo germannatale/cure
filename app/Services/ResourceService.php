@@ -13,6 +13,7 @@ use App\Models\Folder;
 use Illuminate\Support\Facades\DB;
 use PhpParser\JsonDecoder;
 use Illuminate\Support\Carbon as Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ResourceService{
 
@@ -100,7 +101,7 @@ class ResourceService{
 
     public function getIndexDatas($id){
         $form = Form::find($id);
-        $formFields = FormField::where('form_id', '=', $id)->where('browse', '=', '1')->get();
+        $formFields = FormField::where('form_id', '=', $id)->where('browse', '=', '1')->get();        
         $indexes = array();
         $relations = array();
         foreach($formFields as $field){
@@ -111,9 +112,32 @@ class ResourceService{
                     'column' => $field->relation_column,
                     'thisTableColumnName' => $field->column_name,
                 ));
-            }
+            }            
         }
         $table = DB::table($form->table_name);
+
+        // -----------------------------------------------------------------------
+        // --------------- Ojo chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
+        $fieldUserId = FormField::where('form_id', '=', $id)
+            ->where('column_name', '=', 'user_id')
+            ->first();
+        if($fieldUserId){
+            if ($form->name == 'Artefactos Genericos'){
+                // Artefactos genericos
+                $table->where('user_id', '=', null);
+            }
+            else{
+                // Mis artefactos
+                $table->where('user_id', '=', Auth::user()->id);
+            }            
+        }
+
+        // -----------------------------------------------------------------------
+        // --------------- Fin chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
         if(!empty($relations)){
             $table->addSelect($form->table_name . '.*');
         }

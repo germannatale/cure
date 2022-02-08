@@ -14,12 +14,10 @@ class EnergiaSeeder extends Seeder
      */
     public function run()
     {
-        Energia::create([
-            'id' => 'luz',
+        Energia::create([            
             'nombre' => 'Luz',
         ]);
-        Energia::create([
-            'id' => 'gas',
+        Energia::create([            
             'nombre' => 'Gas',
         ]);
     }

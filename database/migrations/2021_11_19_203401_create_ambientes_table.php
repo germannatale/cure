@@ -16,8 +16,8 @@ class CreateAmbientesTable extends Migration
         Schema::create('ambientes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->string('tipo');
-            $table->float('m3');
+            $table->string('tipo')->nullable();
+            $table->float('m3')->nullable();
             $table->boolean('termico');
             $table->bigInteger('inmueble_id')->unsigned();
             $table->timestamps();

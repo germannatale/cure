@@ -1,16 +1,15 @@
 @php                                               
-    $tarifario = App\Models\Tarifario::find($id)->with('proveedor')->with('tarifas')->first();    
-    $energia = App\Models\Energia::find($tarifario->proveedor->energia_id)->first();   
-    if ($energia->id == 'luz') {
-        //luz
+    $tarifario = App\Models\Tarifario::with('proveedor')->with('tarifas')->find($id);
+    $energia = App\Models\Energia::find($tarifario->proveedor->energia_id);    
+    if ($energia->nombre == 'Luz') {
+        //luz        
         $categorias = App\Models\CategoriaLuz::pluck('nombre', 'id');
         $subcategorias = App\Models\SubcategoriaLuz::pluck('nombre', 'id');
     } else {
-        //gas
+        //gas       
         $categorias = App\Models\CategoriaGas::pluck('nombre', 'id');
         $subcategorias = App\Models\SubcategoriaGas::pluck('nombre', 'id');
-    }
-   
+    }    
 @endphp
 
 <div class="col-12">

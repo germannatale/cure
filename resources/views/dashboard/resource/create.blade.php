@@ -44,6 +44,8 @@
                                         echo '<input class="form-check-input" type="radio" value="false" name="' . $column->column_name . '">';
                                         echo '<label class="form-check-label">no</label>';
                                         echo '</div>';
+                                    }elseif($column->type == 'hidden'){
+                                        echo '<input type="hidden" name="' . $column->column_name . '">';
                                     }else{
                                         echo '<div class="form-group">';
                                         echo '<label>' . $column->name . '</label>';
@@ -80,7 +82,7 @@
                                     echo '<div class="form-group row">';
                                     echo '<label class="col-form-label">' . $column->name . '</label>';
                                     echo '<textarea class="form-control" name="' . $column->column_name . '" rows="9" value="'. old($column->column_name) .'"></textarea>';
-                                    echo '</div>';
+                                    echo '</div>';                                
                                 }else{
                                     echo '<p>Not recognize field type: ' . $column->type . '</p>';
                                 }
