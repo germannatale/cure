@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Inmueble;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,7 +31,8 @@ class DatabaseSeeder extends Seeder
             ArtefactoSeeder::class,
             ArtefactoTipo::class,
             MisArtefactosSeeder::class,
-            //BREADSeeder::class,           
+            //InmuebleSeeder::class,
+            //BREADSeeder::class,
         ]);
     }
 }

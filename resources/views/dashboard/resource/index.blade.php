@@ -15,6 +15,7 @@
           <div class="card-header"><h4>{{ $form->name }}</h4></div>
             <div class="card-body">                
                 <div class="row">
+                    <p>{{ $form->description }}</p>
                     {{-- Boton Agregar --}}
                     <div class="col-12 col-md-6 mt-2">
                         @if( $enableButtons['add'] == 1 )                    

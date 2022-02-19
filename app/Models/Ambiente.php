@@ -9,7 +9,7 @@ class Ambiente extends Model
 {
     use HasFactory;
 
-    protected $table = 'ambiente';
+    protected $table = 'ambientes';
    
     protected $filliable = [
         'nombre',

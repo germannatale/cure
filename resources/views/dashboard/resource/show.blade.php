@@ -37,11 +37,8 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <a 
-                                    href="{{ route('resource.index', $form->id) }}"                                    
-                                    class="btn btn-secondary"
-                                >
-                                    Volver
+                                <a href="{{ route('resource.index', $form->id) }}" class="btn btn-secondary">
+                                    <i class="fas fa-backward"></i> Volver
                                 </a>
                             </div>
                         </div>

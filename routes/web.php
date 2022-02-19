@@ -18,7 +18,7 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {           return view('dashboard.home'); });
     Route::get('/simulacion', function () {           return view('dashboard.simulacion.simulador'); });
     Route::get('/simulacion/resultados', function () {           return view('dashboard.simulacion.resultados'); })->name('simulador.resultados');
-    Route::get('/inmuebles', function () {           return view('dashboard.inmuebles.index'); });
+    
     Route::get('/proveedores', function () {           return view('dashboard.proveedores.index'); });
     Route::get('/proveedores/1/cuadro-tarifario/1', function () {           return view('dashboard.proveedores.cuadro-tarifario'); })->name('proveedores.cuadro-tarifario');
     Route::get('/artefactos/electrico', function () {           return view('dashboard.artefactos.electrico'); });
@@ -129,8 +129,23 @@ Route::group(['middleware' => ['get.menu']], function () {
         Route::resource('users',        'UsersController')->except( ['create', 'store'] );
         Route::resource('roles',        'RolesController');
     });
+
+    //Tarifas
+    Route::any('/tarifas/store', 'TarifaController@store')->name('tarifas.store');
+    Route::any('/tarifas/{id}/destroy', 'TarifaController@destroy')->name('tarifas.destroy');
+
+    //Inmuebles
+    Route::get('/inmuebles', 'InmuebleController@index')->name('inmuebles.index');    
+    Route::get('/inmuebles/create', 'InmuebleController@create')->name('inmuebles.create');
+    Route::any('/inmuebles/store', 'InmuebleController@store')->name('inmuebles.store');
+    Route::get('/inmuebles/{id}/show', 'InmuebleController@show')->name('inmuebles.show');
+    Route::get('/inmuebles/{id}/edit', 'InmuebleController@edit')->name('inmuebles.edit');
+    Route::any('/inmuebles/{id}/update', 'InmuebleController@update')->name('inmuebles.update');
+    Route::any('/inmuebles/{id}/destroy', 'InmuebleController@destroy')->name('inmuebles.destroy');
+
+    //Ambientes   
+    Route::any('/ambientes/store', 'AmbienteController@store')->name('ambientes.store');    
+    Route::any('/ambientes/{id}/destroy', 'AmbienteController@destroy')->name('ambientes.destroy');
 });
 
-//Tarifas
-Route::any('/tarifas/store', 'TarifaController@store')->name('tarifas.store');
-Route::any('/tarifas/{id}/destroy', 'TarifaController@destroy')->name('tarifas.destroy');
+

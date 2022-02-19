@@ -18,16 +18,18 @@ class CreateInmueblesTable extends Migration
             $table->string('nombre');
             $table->string('direccion');
             $table->bigInteger('localidad_id')->unsigned();
-            $table->integer('antiguedad');
+            $table->string('antiguedad');
             $table->integer('moradores');
             $table->string('tipo');
             $table->bigInteger('luz_proveedor_id')->unsigned()->nullable();
-            $table->bigInteger('gas_proveedor_id')->unsigned()->nullable();           
+            $table->bigInteger('gas_proveedor_id')->unsigned()->nullable();  
+            $table->bigInteger('user_id')->unsigned()->nullable(); // Nullable para Inmuebles Prototipo
             $table->timestamps();
             //FKs
             $table->foreign('localidad_id')->references('id')->on('localidades');
             $table->foreign('luz_proveedor_id')->references('id')->on('proveedores');
-            $table->foreign('gas_proveedor_id')->references('id')->on('proveedores');            
+            $table->foreign('gas_proveedor_id')->references('id')->on('proveedores');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

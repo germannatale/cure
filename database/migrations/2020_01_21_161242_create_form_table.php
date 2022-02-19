@@ -17,6 +17,7 @@ class CreateFormTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->string('table_name');
             $table->boolean('read');
             $table->boolean('edit');

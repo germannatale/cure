@@ -107,17 +107,11 @@
                                     }
                                 ?>
                             @endforeach
-                            <button
-                                type="submit"
-                                class="btn btn-primary mt-3"
-                            >
-                                Guardar
+                            <button type="submit" class="btn btn-primary mt-3">
+                                <i class="fas fa-save"></i> Guardar
                             </button>
-                            <a 
-                                href="{{ route('resource.index', $form->id) }}"
-                                class="btn btn-secondary mt-3"
-                            >
-                                Volver
+                            <a href="{{ route('resource.index', $form->id) }}" class="btn btn-secondary mt-3">
+                                <i class="fas fa-backward"></i> Volver
                             </a>
                         </form>
                         

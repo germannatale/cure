@@ -21,17 +21,11 @@
                             @method('DELETE')
                             <input type="hidden" name="marker" value="true">
                             <p>Esta seguro de eliminarlo?</p>
-                            <button
-                                type="submit"
-                                class="btn btn-danger mt-3"
-                            >
-                                Eliminar
+                            <button type="submit" class="btn btn-danger mt-3">
+                                <i class="fas fa-trash"></i> Eliminar
                             </button>
-                            <a 
-                                href="{{ route('resource.index', $table) }}"
-                                class="btn btn-secondary mt-3"
-                            >
-                                Volver
+                            <a href="{{ route('resource.index', $table) }}" class="btn btn-secondary mt-3">
+                                <i class="fas fa-backward"></i> Volver
                             </a>
                         </form>
                     </div>
