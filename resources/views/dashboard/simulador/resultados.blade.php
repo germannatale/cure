@@ -27,31 +27,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>                                   
-                                        <td>Lampara LED 5W</td>
-                                        <td>Iluminación</td>
-                                        <td>Electrica</td>
-                                        <td class="text-right">0.9 kW/h</td> 
-                                    </tr>
-                                    <tr>
-                                        <td>TV LED 50 pulgadas</td>
-                                        <td>Electronica</td>
-                                        <td>Electrica</td>
-                                        <td class="text-right">25.5 kW/h</td>                                       
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>Heladera</td>
-                                        <td>Linea Blanca</td>
-                                        <td>Electrica</td>
-                                        <td class="text-right">180 kW/h</td>
-                                        
-                                    </tr>
+                                    @foreach($inmueble->ambientes as $ambiente)
+                                        @foreach($ambiente->artefactos as $artefacto)
+                                            <tr>                                   
+                                                <td>{{$artefacto->nombre}}</td>
+                                                <td>{{$artefacto->tipo->nombre}}</td>
+                                                <td>{{$artefacto->energia->nombre}}</td>
+                                                <td class="text-right">{{$artefacto->consumoMensual() . $artefacto->energia->unidad}}</td> 
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
                                     <tr>
                                         <td>Total</td>
                                         <td></td>
                                         <td></td>
-                                        <td class="text-right text-danger text-bold">206.4 kW/h</td>
+                                        <td class="text-right text-danger text-bold">{{$inmueble->ambientes->sum('consumo_mensual')}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -67,7 +57,7 @@
                     <div class="text-muted text-right mb-4">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <div class="text-value-lg">206.4</div><small class="text-muted text-uppercase font-weight-bold">Consumo Total</small>
+                    <div class="text-value-lg">{{$inmueble->ambientes->sum('consumo_mensual')}}</div><small class="text-muted text-uppercase font-weight-bold">Consumo Total</small>
                     <div class="progress progress-white progress-xs mt-3">
                       <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>

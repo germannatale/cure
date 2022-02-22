@@ -13,6 +13,7 @@ use App\Models\GasProveedor;
 use App\Models\Tarifario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\AmbienteArtefacto;
 
 class InmuebleController extends Controller
 {
@@ -126,5 +127,23 @@ class InmuebleController extends Controller
             ->findOrFail($id);      
         
         return view('dashboard.inmuebles.show')->with('inmueble' , $inmueble);
+    }
+
+    //artefactoStore
+    public function agregarArtefacto($inmueble_id, Request $request){
+        $ambiente_id = $request->ambiente_id;
+        $artefacto_id = $request->artefacto_id;
+        $ambiente = Ambiente::findOrFail($ambiente_id);
+        $ambiente->agregarArtefacto($artefacto_id);        
+        return redirect()->route('simulador.index', [$inmueble_id, 1])->withCollapse($ambiente->id);
+    }
+
+    //artefactoDestroy
+    public function quitarArtefacto($inmueble_id, Request $request){
+        $ambiente_id = $request->ambiente_id;
+        $artefacto_id = $request->artefacto_id;
+        $ambiente = Ambiente::findOrFail($ambiente_id);
+        $ambiente->quitarArtefacto($artefacto_id);
+        return redirect()->route('simulador.index', [$inmueble_id, 1])->withCollapse($ambiente->id);
     }
 }

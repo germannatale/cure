@@ -48,4 +48,13 @@ class Inmueble extends Model
         return $this->ambientes->map->artefactos;
     }
 
+    public function getConsumoMensualAttribute()
+    {
+        // Obtiene el consumo mensual de todos los artefactos
+        $consumo = 0;
+        foreach ($this->ambientes() as $ambiente) {
+            $consumo += $ambiente->consumo_mensual;
+        }
+    }
+
 }

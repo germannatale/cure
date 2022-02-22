@@ -60,9 +60,23 @@
                                 <td>{{ $inmueble->luz_proveedor ? $inmueble->luz_proveedor->nombre : '' }}</td>
                                 <td>{{ $inmueble->gas_proveedor ? $inmueble->gas_proveedor->nombre : '' }}</td>
                                 <td class="text-right">
-                                    <a href="{{ route('inmuebles.show', $inmueble->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('inmuebles.edit', $inmueble->id) }}" class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i></a>                                        
-                                    <a href="{{ route('inmuebles.destroy', $inmueble->id) }}" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                                    <a href="{{ route('simulador.index', [$inmueble->id, 1]) }}" 
+                                        data-toggle="tooltip" data-placement="top" title="Simular Consumo Eléctrico"
+                                        class="btn btn-sm btn-outline-primary {{$inmueble->luz_proveedor ? '' : 'disable'}}">
+                                        <i class="fas fa-bolt"></i>
+                                    </a>
+                                    <a href="{{ route('inmuebles.show', $inmueble->id) }}" 
+                                        data-toggle="tooltip" data-placement="top" title="Ver Inmueble | Agregar Ambientes"
+                                        class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('inmuebles.edit', $inmueble->id) }}"
+                                        data-toggle="tooltip" data-placement="top" title="Editar Inmueble" 
+                                        class="btn btn-sm btn-secondary"><i class="fas fa-edit"></i>
+                                    </a>                                        
+                                    <a href="{{ route('inmuebles.destroy', $inmueble->id) }}" 
+                                        data-toggle="tooltip" data-placement="top" title="Eliminar Inmueble"
+                                        class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach                                            

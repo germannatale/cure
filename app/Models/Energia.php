@@ -18,7 +18,7 @@ class Energia extends Model
 
     public function getUnidadAttribute()
     {       
-        return $this->id == 'luz' ? 'kWh' : 'm3';        
+        return $this->id == 1 ? 'kWh' : 'm3';        
     }
 
 }

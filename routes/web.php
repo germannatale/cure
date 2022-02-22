@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/', function () {           return view('dashboard.home'); });
-    Route::get('/simulacion', function () {           return view('dashboard.simulacion.simulador'); });
-    Route::get('/simulacion/resultados', function () {           return view('dashboard.simulacion.resultados'); })->name('simulador.resultados');
+    // Route::get('/simulacion', function () {           return view('dashboard.simulacion.simulador'); });
+    // Route::get('/simulacion/resultados', function () {           return view('dashboard.simulacion.resultados'); })->name('simulador.resultados');
     
     Route::get('/proveedores', function () {           return view('dashboard.proveedores.index'); });
     Route::get('/proveedores/1/cuadro-tarifario/1', function () {           return view('dashboard.proveedores.cuadro-tarifario'); })->name('proveedores.cuadro-tarifario');
@@ -142,10 +142,17 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/inmuebles/{id}/edit', 'InmuebleController@edit')->name('inmuebles.edit');
     Route::any('/inmuebles/{id}/update', 'InmuebleController@update')->name('inmuebles.update');
     Route::any('/inmuebles/{id}/destroy', 'InmuebleController@destroy')->name('inmuebles.destroy');
+    Route::get('/inmuebles/{id}/artefacto/attach', 'InmuebleController@agregarArtefacto')->name('inmueble.artefacto.store');
+    Route::get('/inmuebles/{inmueble_id}/ambiente/{ambiente_id}/artefacto/{artefacto_id}/dettach', 'InmuebleController@quitarArtefacto')->name('inmueble.artefacto.destroy');
 
     //Ambientes   
     Route::any('/ambientes/store', 'AmbienteController@store')->name('ambientes.store');    
     Route::any('/ambientes/{id}/destroy', 'AmbienteController@destroy')->name('ambientes.destroy');
+
+    //Simulacion
+    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}', 'SimuladorController@index')->name('simulador.index');
+    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}/resultados', 'SimuladorController@resultados')->name('simulador.resultados');    
+    
 });
 
 

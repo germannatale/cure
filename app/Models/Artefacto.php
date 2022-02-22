@@ -20,9 +20,9 @@ class Artefacto extends Model
         'user_id',
     ];
 
-    public function artefactoTipo()
+    public function tipo()
     {
-        return $this->belongsTo(ArtefactoTipo::class);
+        return $this->belongsTo(ArtefactoTipo::class, 'artefacto_tipo_id', 'id');
     }
 
     public function artefactos()
@@ -34,6 +34,19 @@ class Artefacto extends Model
     {
         return $this->belongsTo(Energia::class);
     }
+
+    public function consumoMensual(){
+        return $this->consumo_hora * $this->horas_uso_prom * 30;
+    }    
+
+    public function consumoAnual(){
+        return $this->consumoMensual() * 12;
+    }
+
+    public function getUnidadAttribute(){
+        return $this->energia->unidad;
+    }
+    
 
 
 

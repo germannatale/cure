@@ -34,11 +34,11 @@
                             <td>{{ $ambiente->nombre }}</td>
                             <td>{{ $ambiente->tipo }}</td>
                             <td>{{ $ambiente->m3 }}</td>
-                            <td>{{ $ambiente->termico }}</td>
+                            <td>{{ $ambiente->termico ? 'Si' : 'No' }}</td>
                             <td class="text-right">
                                 <a href="{{ route('ambientes.destroy', ['id' => $ambiente->id ]) }}" 
                                     class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar Ambiente">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>                               
                             </td>
                         </tr>
@@ -60,15 +60,18 @@
                 <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
-            <!-- Formulario Agregar Tarifa-->
+            {{-- Formulario Agregar Ambiente --}}
             <form id="formagregarAmbiente" method="PUT" action={{ route('ambientes.store') }}>
                 <div class="modal-body">                    
                     @csrf
+                    {{-- inmueble_id --}}
                     <input type="hidden" name="inmueble_id" value="{{ $inmueble->id }}">
+                    {{-- nombre --}}
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Ambiente" required>
                     </div>
+                     {{-- tipo --}}
                     <div class="form-group">
                         <label for="tipo">Tipo | Clasificación</label>
                         <select name="tipo" id="tipo" class="form-control">
@@ -77,16 +80,18 @@
                             <option value="EXT">Ambiente exterior</option>
                         </select>                        
                     </div>
+                    
                     <div class="form-row">
+                        {{-- m3 --}}
                         <div class="form-group col-md-6">
                             <label for="categoria">m3</label>
-                            <input type="number" class="form-control" id="m3" name="m3" placeholder="m3" required>                            
+                            <input type="number" min="0" step="0.01" class="form-control" id="m3" name="m3" placeholder="m3" required>                            
                         </div>
+                        {{-- Termico --}}
                         <div class="form-group col-md-6">
-                            <label for="termico">Térmico</label>
-                            {{-- checkbox --}}
+                            <label for="termico">Térmico</label>                            
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="0" id="termico" name="termico">
+                                <input class="form-check-input" type="checkbox" id="termico" name="termico">
                                 <label class="form-check-label" for="termico">
                                     Térmico
                                 </label>
