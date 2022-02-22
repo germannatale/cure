@@ -42,12 +42,12 @@
                                             <td class="text-right">
                                                 <a href="{{ route('simulador.index', [$inmueble->id, 1]) }}" 
                                                     data-toggle="tooltip" data-placement="top" title="Simular Consumo Luz"
-                                                    class="btn btn-sm btn-outline-primary {{$inmueble->luz_proveedor ? '' : 'disable'}}">
+                                                    class="btn btn-sm btn-outline-primary {{$inmueble->luz_proveedor ? '' : 'disabled'}}">
                                                     <i class="fas fa-bolt"></i>
                                                 </a>
                                                 <a href="{{ route('simulador.index', [$inmueble->id, 2]) }}" 
                                                     data-toggle="tooltip" data-placement="top" title="Simular Consumo Gas"
-                                                    class="btn btn-sm btn-outline-danger {{$inmueble->luz_proveedor ? '' : 'disable'}}">
+                                                    class="btn btn-sm btn-outline-warning {{$inmueble->luz_proveedor ? '' : 'disabled'}}">
                                                     <i class="fas fa-fire"></i>
                                                 </a>
                                             </td> 

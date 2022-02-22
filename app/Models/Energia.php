@@ -21,4 +21,19 @@ class Energia extends Model
         return $this->id == 1 ? 'kWh' : 'm3';        
     }
 
+    public function getUnidadMinimaAttribute()
+    {
+        return $this->id == 1 ? 'Wh' : 'kcal';
+    }
+
+    public function getColorAttribute()
+    {
+        return $this->id == 1 ? 'primary' : 'warning';
+    }
+
+    public function getIconoAttribute()
+    {
+        return $this->id == 1 ? 'fa-bolt' : 'fa-fire';
+    }
+
 }

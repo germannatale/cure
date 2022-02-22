@@ -35,8 +35,8 @@ class InmuebleController extends Controller
     {
         //localidad ordenada por nombre
         $localidades = Localidad::orderBy('nombre')->get();        
-        $luzProveedores = LuzProveedor::orderBy('nombre')->pluck('nombre', 'id');
-        $gasProveedores = GasProveedor::orderBy('nombre')->pluck('nombre', 'id');        
+        $luzProveedores = LuzProveedor::orderBy('nombre')->pluck('nombre', 'id')->prepend('Seleccione un proveedor', '');
+        $gasProveedores = GasProveedor::orderBy('nombre')->pluck('nombre', 'id')->prepend('Seleccione un proveedor', '');      
         return view('dashboard.inmuebles.create')->with(compact('localidades', 'luzProveedores', 'gasProveedores'));
            
     }
@@ -84,8 +84,8 @@ class InmuebleController extends Controller
     {
         $inmueble = Inmueble::findOrFail($id);        
         $localidades = Localidad::orderBy('nombre')->get();
-        $luzProveedores = LuzProveedor::orderBy('nombre')->pluck('nombre', 'id');
-        $gasProveedores = GasProveedor::orderBy('nombre')->pluck('nombre', 'id');
+        $luzProveedores = LuzProveedor::orderBy('nombre')->pluck('nombre', 'id')->prepend('Seleccione un proveedor', '');
+        $gasProveedores = GasProveedor::orderBy('nombre')->pluck('nombre', 'id')->prepend('Seleccione un proveedor', '');
         return view('dashboard.inmuebles.edit')->with(compact('inmueble', 'localidades', 'luzProveedores', 'gasProveedores'));
     }
 

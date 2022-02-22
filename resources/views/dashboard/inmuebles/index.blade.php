@@ -7,11 +7,12 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
-          <div class="card-header"><h4><i class="fas fa-home"></i> Inmuebles</h4></div>
+          <div class="card-header"><h4><i class="fas fa-house-user"></i> Mis Inmuebles</h4></div>
             <div class="card-body">
                 <p>
-                    Desde esta pantalla administre sus inmuebles. Puede agregar cuantos quiera. 
-                    Luego desde el boton agregar ambientes puede agregar ambientes y artefactos.
+                    Desde esta pantalla administra tus inmuebles. Podes agregar cuantos quieras. 
+                    Luego desde el boton agregar ambientes podras agregar ambientes. Recuerda tambien 
+                    crear <a href="{{ url('/resource/7/resource') }}">artefactos</a> para luego agregarlos a los ambientes en el simulador.
                 </p>
                 <div class="row">                    
                     {{-- Boton Agregar --}}
@@ -62,8 +63,13 @@
                                 <td class="text-right">
                                     <a href="{{ route('simulador.index', [$inmueble->id, 1]) }}" 
                                         data-toggle="tooltip" data-placement="top" title="Simular Consumo Eléctrico"
-                                        class="btn btn-sm btn-outline-primary {{$inmueble->luz_proveedor ? '' : 'disable'}}">
+                                        class="btn btn-sm btn-outline-primary {{$inmueble->luz_proveedor ? '' : 'disabled'}}">
                                         <i class="fas fa-bolt"></i>
+                                    </a>
+                                    <a href="{{ route('simulador.index', [$inmueble->id, 2]) }}" 
+                                        data-toggle="tooltip" data-placement="top" title="Simular Consumo Gas"
+                                        class="btn btn-sm btn-outline-warning {{$inmueble->luz_proveedor ? '' : 'disabled'}}">
+                                        <i class="fas fa-fire"></i>
                                     </a>
                                     <a href="{{ route('inmuebles.show', $inmueble->id) }}" 
                                         data-toggle="tooltip" data-placement="top" title="Ver Inmueble | Agregar Ambientes"

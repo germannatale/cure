@@ -8,10 +8,12 @@ use App\Models\Ambiente;
 use App\Models\Artefacto;
 use App\Models\Energia;
 use App\Models\ArtefactoTipo;
+use App\Models\Categoria;
 use App\Models\Localidad;
 use App\Models\LuzProveedor;
 use App\Models\GasProveedor;
 use App\Models\Tarifario;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 
 class SimuladorController extends Controller
@@ -26,16 +28,40 @@ class SimuladorController extends Controller
     //index
     public function index($inmueble_id, $energia_id, Request $request)
     {
-        $user = Auth::user();
-        $inmueble = Inmueble::with('ambientes')->find($inmueble_id);
-        $artefactos = Artefacto::orderBy('nombre')->pluck('nombre', 'id');                       
-        return view('dashboard.simulador.index', compact('inmueble', 'artefactos' , 'energia_id'));
+        $energia = Energia::find($energia_id);
+        $inmueble = Inmueble::with('ambientes')->find($inmueble_id);               
+        $artefactos = Artefacto::where('energia_id', $energia->id)->orderBy('nombre')->pluck('nombre', 'id');
+        $categorias = Categoria::where('energia_id', $energia->id)->orderBy('nombre')->get();
+        return view('dashboard.simulador.index', compact('inmueble', 'artefactos' , 'energia_id', 'categorias'));
+
     }
 
     //resultados
-    public function resultados($inmueble_id, $energia_id){
-        $inmueble = Inmueble::with('ambientes')->find($inmueble_id);        
-        return view('dashboard.simulador.resultados', compact('inmueble'));
-
+    public function resultados($inmueble_id, $energia_id, Request $request){  
+        $categoria_id = $request->categoria_id;      
+        $inmueble = Inmueble::with('ambientes')->find($inmueble_id);
+        $energia = Energia::find($energia_id);
+        if ($energia->nombre = 'Luz'){
+            // obtengo las el tarifario de luz de del proveedor para esa localidad
+            $tarifario = Tarifario::where('localidad_id', $inmueble->localidad_id)
+                ->where('proveedor_id', $inmueble->luz_proveedor_id)                
+                ->with('tarifas')
+                ->first();
+            // obtengo las tarifas para su categoria del tarifario            
+            $tarifario ?  $tarifas = $tarifario->tarifas->where('categoria_id', $categoria_id) : $tarifas = null;          
+            
+        }
+        else{
+            // obtengo las el tarifario de gas de del proveedor para esa localidad
+            $tarifario = Tarifario::where('localidad_id', $inmueble->localidad_id)
+            ->where('proveedor_id', $inmueble->gas_proveedor_id)
+            ->with('tarifas')
+            ->first();
+            // obtengo las tarifas para su categoria del tarifario
+            $tarifario ?  $tarifas = $tarifario->tarifas->where('categoria_id', $categoria_id) : $tarifas = null;
+        }
+        $tarifas ?? session()->flash('error', 'Upps!!! No hay tarifas para la categoría seleccionada. Consulte al administrador del sistema. No se calculará el costo del consumo.');
+        return view('dashboard.simulador.resultados', compact('inmueble', 'energia', 'tarifas'));     
+        
     }
 }
