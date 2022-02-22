@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4><i class="fas fa-bolt"></i> Simulador</h4>                    
+                        <h4><i class="fas fa-calculator"></i> Simulador</h4>                    
                     </div>
                     <div class="card-body">
                         <p>

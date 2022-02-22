@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inmueble;
 use App\Models\Ambiente;
 use App\Models\Artefacto;
+use App\Models\Energia;
 use App\Models\ArtefactoTipo;
 use App\Models\Localidad;
 use App\Models\LuzProveedor;
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SimuladorController extends Controller
 {
+    //select
+    public function select(){
+        $inmuebles = Inmueble::where('user_id', Auth::user()->id)->get();
+        $energia = Energia::all();
+        return view('dashboard.simulador.select', compact('inmuebles', 'energia'));
+    }
+
     //index
     public function index($inmueble_id, $energia_id, Request $request)
     {

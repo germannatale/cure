@@ -150,7 +150,8 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::any('/ambientes/{id}/destroy', 'AmbienteController@destroy')->name('ambientes.destroy');
 
     //Simulacion
-    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}', 'SimuladorController@index')->name('simulador.index');
+    Route::get('/simulador', 'SimuladorController@select')->name('simulador.select');   
+    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}', 'SimuladorController@index')->name('simulador.index');  
     Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}/resultados', 'SimuladorController@resultados')->name('simulador.resultados');    
     
 });
