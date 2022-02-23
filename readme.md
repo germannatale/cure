@@ -48,7 +48,9 @@ docker exec -it cure_php npm run dev
 ## Otros comandos útiles
 `docker exec -it cure_php php artisan migrate:fresh --seed` Restaura la DB
 
-## Problemas conocidos
+## Pendientes
 * Simulacion de gas incompleta (No calcula costos y muestra mal las unidades)
 * Registracion de usurios (falta implentar Maileable)
 * Pueden faltar algunas validaciones
+* Limpiar rutas
+* Limpiar templates no utilizados (blade)
