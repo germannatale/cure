@@ -61,27 +61,48 @@ class UsersSeeder extends Seeder
         ]);
         $user->assignRole('dev');
         $user->assignRole('admin');
+        
         $user = User::create([ 
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'menuroles' => 'user,admin' 
+            'menuroles' => 'admin,user' 
         ]);
         $user->assignRole('admin');
         $user->assignRole('user');
-        for($i = 0; $i<$numberOfUsers; $i++){
-            $user = User::create([ 
-                'name' => $faker->name(),
-                'email' => $faker->unique()->safeEmail(),
-                'email_verified_at' => now(),
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-                'remember_token' => Str::random(10),
-                'menuroles' => 'user'
-            ]);
-            $user->assignRole('user');
-            array_push($usersIds, $user->id);
-        }       
+
+        $user = User::create([ 
+            'name' => 'usuario',
+            'email' => 'usuario@usuario.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'menuroles' => 'user' 
+        ]);        
+        $user->assignRole('user');
+
+        $user = User::create([ 
+            'name' => 'estudiante',
+            'email' => 'estudiante@estudiante.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'menuroles' => 'estudiante' 
+        ]);        
+        $user->assignRole('estudiante');
+        // for($i = 0; $i<$numberOfUsers; $i++){
+        //     $user = User::create([ 
+        //         'name' => $faker->name(),
+        //         'email' => $faker->unique()->safeEmail(),
+        //         'email_verified_at' => now(),
+        //         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        //         'remember_token' => Str::random(10),
+        //         'menuroles' => 'user'
+        //     ]);
+        //     $user->assignRole('user');
+        //     array_push($usersIds, $user->id);
+        // }       
     }
 }

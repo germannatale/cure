@@ -153,7 +153,11 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::get('/simulador', 'SimuladorController@select')->name('simulador.select');   
     Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}', 'SimuladorController@index')->name('simulador.index');  
     Route::post('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}/resultados', 'SimuladorController@resultados')->name('simulador.resultados');
-    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}/store', 'SimuladorController@store')->name('simulador.store');   
+    Route::get('/simulador/inmuebles/{inmueble_id}/energia/{energia_id}/store', 'SimuladorController@store')->name('simulador.store');
+    
+    //Simaulacioens
+    Route::get('/simulaciones', 'SimulacionController@index')->name('simulaciones.index');
+    Route::post('/simulacion/inmuebles/{inmueble_id}/energia/{energia_id}', 'SimulacionController@store')->name('simulacion.store');
     
 });
 

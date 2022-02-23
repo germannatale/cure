@@ -86,13 +86,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <a href="{{ route('simulador.store',[$inmueble->id, $energia->id]) }}" class="btn btn-primary mt-3">
-                                <i class="fas fa-save"></i> Guardar
-                            </a>
-                            <a href="{{ route('simulador.index',[$inmueble->id, $energia->id]) }}" class="btn btn-secondary mt-3">
-                                <i class="fas fa-backward"></i> Volver
-                            </a>
-                
+                            <form action="{{route('simulacion.store',[$inmueble->id, $energia->id])}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="consumo_total_kwh" value="{{$consumoTotalkWh}}">
+                                <input type="hidden" name="gasto_total" value="{{$gastoTotal}}">
+                                <a href="{{ route('simulador.index',[$inmueble->id, $energia->id]) }}" class="btn btn-secondary mt-3">
+                                    <i class="fas fa-backward"></i> Volver
+                                </a>                                
+                                <button type="submit" class="btn btn-primary mt-3">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            </form>                
                         </div>
                 </div>
             </div>
