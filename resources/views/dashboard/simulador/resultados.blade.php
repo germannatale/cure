@@ -3,13 +3,16 @@
 @section('content')
 
 @php
-    $consumoTotal = $inmueble->ambientes->sum('consumo_mensual') / 1000; // en Kwh
+    $consumoTotal = $inmueble->consumoMensual($energia->id); // en Wh
+    $consumoTotalkWh = $consumoTotal / 1000; // en kWh
+    $gastoTotal = 0;
+    $tarifaSeleccionada = null;    
     foreach ( $tarifas as $tarifa ){
         // busco la tarifa que corresponde al consumo total del inmueble
-        if ( $tarifa->consumo_minimo <= $consumoTotal && $tarifa->consumo_maximo >= $consumoTotal ){
+        if ( $tarifa->consumo_minimo <= $consumoTotalkWh && $tarifa->consumo_maximo >= $consumoTotalkWh ){
             $tarifaSeleccionada = $tarifa;
-            $gastoTotal = $tarifa->precio_fijo + $consumoTotal * $tarifa->precio_variable;
-        }
+            $gastoTotal = $tarifa->precio_fijo + $consumoTotalkWh * $tarifa->precio_variable;
+        }        
     }
 @endphp
 
@@ -22,40 +25,64 @@
                 <div class="card">
                     <div class="card-header"><h4><i class="fas fa-bolt"></i> Consumo de {{$energia->nombre . ': ' . $inmueble->nombre}}</h4></div>
                         <div class="card-body">
-                            <p>
-                                Resultados mensuales de la simulacion electrica de todos tus artefactos.
-                            </p>
+                            @if($gastoTotal)
+                                <p>
+                                    Resultados mensuales de la simulacion electrica de todos tus artefactos.
+                                </p>                                
+                            @else
+                                <p class="text-danger">
+                                    <strong>Upps! </strong>Parece que ninguna de las tarifas cargadas se aplica a tu caso.                                     
+                                </p>
+                                <p>
+                                    Solo simularemos el consumo pero no podremos calcular su costo
+                                </p>                            
+                            @endif
                             
                             {{-- Tabla --}}
-                            <table class="table table-striped table-sm datatable mt-3">                                
+                            <table class="table table-hover table-sm datatable mt-3">                                
                                 <thead>
                                     <tr>                                    
                                         <th>Artefacto</th>
-                                        <th>Categoría</th>                                        
-                                        <th>Energia</th>
-                                        <th class="text-right">Consumo Mes</th>             
+                                        <th>Categoría</th>
+                                        <th class="text-right">Consumo Mensual</th>
+                                        <th class="text-right">Gasto Mensual</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($inmueble->ambientes as $ambiente)
-                                        @foreach($ambiente->artefactos as $artefacto)
+                                        @php
+                                            $energia->nombre == 'Luz' ? $artefactos = $ambiente->luz_artefactos : $artefactos = $ambiente->gas_artefactos;                                            
+                                        @endphp
+                                        @foreach($artefactos as $artefacto)
                                             <tr>                                   
                                                 <td>{{$artefacto->nombre}}</td>
-                                                <td>{{$artefacto->tipo->nombre}}</td>
-                                                <td>{{$artefacto->energia->nombre}}</td>
+                                                <td>{{$artefacto->tipo->nombre}}</td>                                                
                                                 <td class="text-right">
                                                     {{$artefacto->consumoMensual() . ' ' .$energia->unidad_minima}}
-                                                </td> 
+                                                </td>
+                                                <td class="text-right">
+                                                    {{ $tarifaSeleccionada ? '$' . $artefacto->consumoMensual() / 1000 * $tarifaSeleccionada->precio_variable : '-' }}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endforeach
-                                    <tr>
-                                        <td>Total</td>
+                                    <tr class="table-secondary">
+                                        <td>Cargo Fijo</td>
                                         <td></td>
-                                        <td></td>
+                                        <td class="text-right text-bold">-</td>                                        
                                         <td class="text-right text-bold">
-                                            {{ $inmueble->ambientes->sum('consumo_mensual') . ' ' . $energia->unidad_minima }}
+                                            {{ $tarifaSeleccionada ? '$' . $tarifaSeleccionada->precio_fijo : '-' }}
                                         </td>
+                                    </tr>
+                                    <tr class="table-dark">                                        
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th class="text-right">
+                                            {{ $consumoTotal . ' ' . $energia->unidad_minima }}
+                                        </th>
+                                        <th class="text-right">
+                                            $ {{ $gastoTotal }}
+                                        </th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -78,16 +105,16 @@
                         <i class="fas {{ $energia->icono }}"></i>
                     </div>
                     <div class="text-value-lg">
-                        {{ $consumoTotal }} {{ $energia->unidad }}
+                        {{ $energia->nombre == 'Luz' ? $consumoTotalkWh : 8837.298 / $consumoTotal  }} {{ $energia->unidad }}
                     </div>
                     <small class="text-muted text-uppercase font-weight-bold">Consumo Total</small>
                     <div class="text-value-lg">
-                        $ {{ $gastoTotal }}
+                        $ {{ $gastoTotal ?? 0 }}
                     </div>
                     <small class="text-muted text-uppercase font-weight-bold">Gasto Total</small>
                     <div class="progress progress-white progress-xs mt-3">
                         <div class="progress-bar" role="progressbar" 
-                            style="width: {{ $consumoTotal * 100 / $tarifaSeleccionada->consumo_maximo }}%" 
+                            style="width: {{ $gastoTotal ? $consumoTotalkWh / $tarifaSeleccionada->consumo_maximo : 0 }}%" 
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
@@ -96,38 +123,44 @@
             </div>
 
             {{-- Tarifas --}}
-            <div class="col-sm-6 col-md-4">
-                <div class="card">
-                    <div class="card-header"><h4><i class="fas fa-dollar-sign"></i> Tarifas</h4></div>
-                    <div class="card-body">
-                        <p>
-                            Tarifas para la categoría {{$tarifa->categoria->nombre}} de tu Proveedor
-                        </p>
-                        
-                        {{-- Tabla --}}
-                        <table class="table table-striped table-sm datatable mt-3">                                
-                            <thead>
-                                <tr>                                    
-                                    <th>Consumo</th>
-                                    <th>Precio Fijo</th>
-                                    <th>Precio Variable</th>                                        
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($tarifas as $tarifa)
-                                    <tr class="{{ $tarifa->id == $tarifaSeleccionada->id ? 'table-' . $energia->color : ''}}">                                   
-                                        <td>
-                                            {{ $tarifa->consumo_minimo . ' a ' . $tarifa->consumo_maximo }} {{ $energia->unidad }}
-                                        </td>
-                                        <td>$ {{ $tarifa->precio_fijo }}</td>
-                                        <td>$ {{ $tarifa->precio_variable }}</td>                                            
+            @if($tarifas->count() > 0)
+                <div class="col-sm-6 col-md-4">
+                    <div class="card">
+                        <div class="card-header"><h4><i class="fas fa-dollar-sign"></i> Tarifas</h4></div>
+                        <div class="card-body">
+                            <p>
+                                Tarifas para la categoría {{$tarifas->first()->categoria->nombre}} de tu Proveedor
+                            </p>
+                            
+                            {{-- Tabla --}}
+                            <table class="table table-hover table-sm datatable mt-3">                                
+                                <thead>
+                                    <tr>                                    
+                                        <th>Consumo</th>
+                                        <th>Precio Fijo</th>
+                                        <th>Precio Variable</th>                                        
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>                
+                                </thead>
+                                <tbody>
+                                    @foreach($tarifas as $tarifa)
+                                        @if ($tarifaSeleccionada) 
+                                            <tr class="{{ $tarifa->id == $tarifaSeleccionada->id ? 'table-secondary' : ''}}">   
+                                        @else
+                                            <tr>
+                                        @endif                                                                        
+                                            <td>
+                                                {{ $tarifa->consumo_minimo . ' a ' . $tarifa->consumo_maximo }} {{ $energia->unidad }}
+                                            </td>
+                                            <td>$ {{ $tarifa->precio_fijo }}</td>
+                                            <td>$ {{ $tarifa->precio_variable }}</td>                                            
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>                
+                        </div>
                     </div>
                 </div>
-            </div>        
+            @endif        
 
         </div>
     </div>

@@ -39,7 +39,17 @@ class Inmueble extends Model
 
     public function ambientes()
     {
-        return $this->hasMany(Ambiente::class);
+        return $this->hasMany(Ambiente::class)->with('luz_artefactos')->with('gas_artefactos');
+    }
+    
+    public function ambientesConLuzArtefactos()
+    {
+        return $this->ambientes()->with('luz_artefactos');
+    }
+
+    public function ambientesConGasArtefactos()
+    {
+        return $this->ambientes()->with('gas_artefactos');
     }
 
     public function artefactos()
@@ -47,14 +57,13 @@ class Inmueble extends Model
         // Obtiene todos los artefactos de todos los ambientes
         return $this->ambientes->map->artefactos;
     }
-
-    public function getConsumoMensualAttribute()
-    {
-        // Obtiene el consumo mensual de todos los artefactos
-        $consumo = 0;
-        foreach ($this->ambientes() as $ambiente) {
-            $consumo += $ambiente->consumo_mensual;
+    
+    public function consumoMensual($energia_id){
+        $consumo = 0;        
+        foreach ($this->ambientes as $ambiente) {
+            $consumo += $ambiente->consumoMensual($energia_id);
         }
+        return $consumo;
     }
 
 }

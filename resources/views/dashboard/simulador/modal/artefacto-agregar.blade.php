@@ -13,11 +13,12 @@
                 <div class="modal-body">                    
                     @csrf
                     {{-- inmueble_id --}}
-                    <input type="hidden" id="agregarArtefactoInmuebleId"name="ambiente_id" value="">
+                    <input type="hidden" id="agregarArtefactoAmbienteId" name="ambiente_id" value="">
+                    <input type="hidden" id="agregarArtefactoEnergiaId" name="energia_id" value="{{ $energia->id }}">
                     {{-- Artefacto --}}
                     <div class="form-group">
                         <label for="nombre">Seleccione Artefacto</label>
-                        {{ Form::select('artefacto_id', $artefactos, null, ['class' => 'form-control']) }}
+                        {{ Form::select('artefacto_id', $artefactosParaAgregar, null, ['class' => 'form-control']) }}
                     </div>
                 </div>
                 <div class="modal-footer">

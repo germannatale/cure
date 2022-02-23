@@ -11,7 +11,7 @@
             <div class="card-body">
                 <p>
                     Desde esta pantalla administra tus inmuebles. Podes agregar cuantos quieras. 
-                    Luego desde el boton agregar ambientes podras agregar ambientes. Recuerda tambien 
+                    Luego desde el boton el ver Inmuble podras agregar sus ambientes. Recuerda tambien 
                     crear <a href="{{ url('/resource/7/resource') }}">artefactos</a> para luego agregarlos a los ambientes en el simulador.
                 </p>
                 <div class="row">                    

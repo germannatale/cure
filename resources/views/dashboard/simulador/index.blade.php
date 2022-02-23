@@ -12,11 +12,10 @@
                     </div>
                     <div class="card-body">
                         <p>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur maiores eius neque laudantium tempora? 
-                            Atque cupiditate consectetur a nihil sapiente nisi dolor perspiciatis! Ipsam, labore. Minima unde ex possimus. 
-                            Odit.Voluptates voluptatum modi necessitatibus inventore.
+                            Desde esta pantalla desplazate por los ambientes que hayas creado y agregales artefactos. 
+                            Una vez que tengas todo listo solo presiona simular consumo. Recuerda seleccionar cual es tu categoría.
                         </p>
-                        <form class="form-row mb-3" action="{{route('simulador.resultados',[$inmueble->id, $energia_id])}}"" method="post">
+                        <form class="form-row mb-3" action="{{route('simulador.resultados',[$inmueble->id, $energia->id])}}"" method="post">
                             @csrf
                             <div class="col text-right">
                                 <div class="input-group "> 
@@ -31,15 +30,12 @@
                                         </select>
                                     </div>
                                 
-                                    <button role="submit" class="btn btn-outline-primary"><i class="fas fa-bolt"></i> Simular Consumo</button>
+                                    <button role="submit" class="btn btn-outline-{{$energia->color}}"><i class="fas {{$energia->icono}}"></i> Simular Consumo</button>
                                 
                                 </div>
                             </div>
                         </form>
                         
-                        
-                        {{-- <a href="{{route('simulador.resultados',[$inmueble->id, $energia_id])}}" class="btn btn-primary mb-3"><i class="fas fa-bolt"></i> Simular Consumo</a> --}}
-                    
                         <div id="accordion"> 
                             @foreach ($inmueble->ambientes as $ambiente)
                             
@@ -55,13 +51,24 @@
                                     </div>
                                     <div id="ambiente-{{$ambiente->id}}" class="collapse" aria-labelledby="header-ambiente-{{$ambiente->id}}" data-parent="#accordion">
                                         <div class="card-body">
-                                            <button class="btn btn-success mb-2" onclick="modalAgregarArtefato({{ $ambiente->id }})">
+                                            <button 
+                                                class="btn btn-success mb-2"
+                                                onclick="{{ $artefactosParaAgregar->count() > 0 ?  'modalAgregarArtefato('. $ambiente->id .')': '' }}">
                                                 <i class="fas fa-link"></i> Agregar Artefacto
                                             </button>
-                                            <p>
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                                                Voluptates, quisquam.
-                                            </p>
+                                            @if($artefactosParaAgregar->count() > 0)
+                                                <p>
+                                                    Añade artefactos con el boton verde o quitalos con el boton rojo. 
+                                                    No puedes crear nuevos o eliminarlos desde esta ventana.
+                                                </p>
+                                            @else
+                                                <p>
+                                                    Parece que no tienes artefactos para agregar. Carga algunos y vuelve a intentarlo.
+                                                </p>
+                                            @endif
+                                            @php
+                                                $energia->nombre == 'Luz' ? $artefactos = $ambiente->luz_artefactos : $artefactos = $ambiente->gas_artefactos;                                                
+                                            @endphp
 
                                             {{-- Tabla de Artefactos --}}
                                             @include('dashboard.simulador.artefactos')

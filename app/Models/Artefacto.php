@@ -25,10 +25,11 @@ class Artefacto extends Model
         return $this->belongsTo(ArtefactoTipo::class, 'artefacto_tipo_id', 'id');
     }
 
-    public function artefactos()
+    public function ambientes()
     {
-        return $this->hasMany(AmbienteArtefacto::class);
+        return $this->belongsToMany(Ambiente::class, 'ambiente_artefacto', 'artefacto_id', 'ambiente_id');
     }
+
 
     public function energia()
     {
@@ -44,7 +45,7 @@ class Artefacto extends Model
     }
 
     public function getUnidadAttribute(){
-        return $this->energia->unidad;
+        return $this->energia->unidad_minima;
     }
     
 

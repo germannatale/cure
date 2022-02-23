@@ -10,8 +10,8 @@
         </tr>
     </thead>
     <tbody>
-        @if($ambiente->artefactos)        
-            @foreach ($ambiente->artefactos as $artefacto)
+        @if($artefactos)        
+            @foreach ($artefactos as $artefacto)
                 <tr>                    
                     <td>{{$artefacto->nombre}}</td>
                     <td>{{$artefacto->energia->nombre}}</td>
@@ -22,7 +22,8 @@
                         <a href="{{route('inmueble.artefacto.destroy',[
                             'inmueble_id' => $inmueble->id,
                             'ambiente_id' => $ambiente->id,
-                            'artefacto_id'=> $artefacto->id
+                            'artefacto_id'=> $artefacto->id,
+                            'energia_id'  => $energia->id                            
                             ])}}"
                             data-toggle="tooltip" data-placement="top" title="Quitar Artefacto"
                             class="btn btn-sm btn-danger"><i class="fas fa-unlink"></i>

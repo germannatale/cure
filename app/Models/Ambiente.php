@@ -25,16 +25,22 @@ class Ambiente extends Model
     }
 
     public function artefactos()
-    {              
-        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')->with('tipo')->with('energia');       
+    {   
+        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')->with('tipo')->with('energia'); 
     }
 
-    public function luzArtefactos(){
-        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')->where('energia_id', 1);
+    public function luz_artefactos(){
+        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')
+            ->where('artefactos.energia_id', 1)
+            ->with('tipo')
+            ->with('energia');
     }
 
-    public function gasArtefactos(){
-        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')->where('energia_id', 2);
+    public function gas_artefactos(){
+        return $this->belongsToMany(Artefacto::class, 'ambiente_artefacto', 'ambiente_id', 'artefacto_id')
+            ->where('artefactos.energia_id', 2)
+            ->with('tipo')
+            ->with('energia');
     }
 
     public function agregarArtefacto($artefacto_id){
@@ -45,9 +51,10 @@ class Ambiente extends Model
         $this->artefactos()->detach($artefacto_id);        
     }
 
-    public function getConsumoMensualAttribute(){
+    public function consumoMensual($energia_id){
         $consumo = 0;
-        foreach ($this->artefactos as $artefacto) {
+        $energia_id == 1 ? $artefactos = $this->luz_artefactos : $artefactos = $this->gas_artefactos;        
+        foreach ($artefactos as $artefacto) {
             $consumo += $artefacto->consumoMensual();
         }
         return $consumo;

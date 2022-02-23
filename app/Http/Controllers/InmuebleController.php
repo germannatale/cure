@@ -133,17 +133,19 @@ class InmuebleController extends Controller
     public function agregarArtefacto($inmueble_id, Request $request){
         $ambiente_id = $request->ambiente_id;
         $artefacto_id = $request->artefacto_id;
+        $energia_id = $request->energia_id;
         $ambiente = Ambiente::findOrFail($ambiente_id);
         $ambiente->agregarArtefacto($artefacto_id);        
-        return redirect()->route('simulador.index', [$inmueble_id, 1])->withCollapse($ambiente->id);
+        return redirect()->route('simulador.index', [$inmueble_id, $energia_id])->withCollapse($ambiente->id);
     }
 
     //artefactoDestroy
     public function quitarArtefacto($inmueble_id, Request $request){
         $ambiente_id = $request->ambiente_id;
         $artefacto_id = $request->artefacto_id;
+        $energia_id = $request->energia_id;
         $ambiente = Ambiente::findOrFail($ambiente_id);
         $ambiente->quitarArtefacto($artefacto_id);
-        return redirect()->route('simulador.index', [$inmueble_id, 1])->withCollapse($ambiente->id);
+        return redirect()->route('simulador.index', [$inmueble_id, $energia_id])->withCollapse($ambiente->id);
     }
 }

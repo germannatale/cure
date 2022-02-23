@@ -20,7 +20,7 @@ class MisArtefactosSeeder extends Seeder
         
         // Resource Artefacto
         DB::table('form')->insert([
-            'name' => 'Mis Artefactos',
+            'name' => 'Artefactos',
             'table_name' => 'artefactos',
             'read' => 1,
             'edit' => 1,

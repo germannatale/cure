@@ -143,7 +143,7 @@ Route::group(['middleware' => ['get.menu']], function () {
     Route::any('/inmuebles/{id}/update', 'InmuebleController@update')->name('inmuebles.update');
     Route::any('/inmuebles/{id}/destroy', 'InmuebleController@destroy')->name('inmuebles.destroy');
     Route::get('/inmuebles/{id}/artefacto/attach', 'InmuebleController@agregarArtefacto')->name('inmueble.artefacto.store');
-    Route::get('/inmuebles/{inmueble_id}/ambiente/{ambiente_id}/artefacto/{artefacto_id}/dettach', 'InmuebleController@quitarArtefacto')->name('inmueble.artefacto.destroy');
+    Route::get('/inmuebles/{inmueble_id}/ambiente/{ambiente_id}/artefacto/{artefacto_id}/energia/{energia_id}/dettach', 'InmuebleController@quitarArtefacto')->name('inmueble.artefacto.destroy');
 
     //Ambientes   
     Route::any('/ambientes/store', 'AmbienteController@store')->name('ambientes.store');    
