@@ -13,7 +13,7 @@ docker exec -it cure_php composer install
 docker exec -it cure_php php artisan key:generate
 
 # Migrar datos a la DB
-docker exec -it cure_php php artisan migrate --seed
+
 
 # Instalar NPM
 docker exec -it cure_php npm install
