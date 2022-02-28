@@ -75,7 +75,7 @@ class ResourceController extends Controller
                     abort('401');
                 }
             }
-        }        
+        }
         $form = Form::find( $table );
         if($form->add == 1){
             $resourceService = new ResourceService();
@@ -121,14 +121,31 @@ class ResourceController extends Controller
         $toValidate = array();
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
-        foreach($formFields as $formField){
-            $toValidate[$formField->column_name] = 'required';
+        // Validacion al crear
+        foreach($formFields as $formField){            
+            if ($formField->validation){               
+                $toValidate[$formField->column_name] = $formField->validation;
+            }            
+            //dump($formField->column_name . ': ' .$formField->validation);            
         }
+
+        // -----------------------------------------------------------------------      
+        // -------------- Ojo chanchada para filtrar por user_id -----------------
+        // -----------------------------------------------------------------------
+       
+        if ($request->has('user_id') && $form->name != "Artefactos Genericos"){
+            $request['user_id'] = Auth::user()->id;
+        }
+
+        // -----------------------------------------------------------------------
+        // --------------- Fin chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
         $request->validate($toValidate);
         if($form->add == 1){
             $resourceService = new ResourceService();
             $resourceService->add($form->id, $form->table_name, $request->all() );
-            $request->session()->flash('message', 'Successfully added to ' . $form->name);
+            $request->session()->flash('exito', $form->name . ' fue agregado correctamente');
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -166,6 +183,7 @@ class ResourceController extends Controller
             return view('dashboard.resource.show', [
                 'form' => $form,
                 'columns' => $resourceService->show($form->id, $form->table_name, $id),
+                'id' => $id,
             ]);
         }else{
             abort('401');
@@ -200,7 +218,7 @@ class ResourceController extends Controller
         $form = Form::find( $table );
         if($form->edit == 1){
             $resourceService = new ResourceService();
-            $formService = new FormService();
+            $formService = new FormService();           
             return view('dashboard.resource.edit', [
                 'form' => $form,
                 'columns' => $resourceService->getColumnsForEdit( $form->table_name, $table, $id ),
@@ -243,13 +261,16 @@ class ResourceController extends Controller
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
         foreach($formFields as $formField){
-            $toValidate[$formField->column_name] = 'required';
+            if ($formField->validation){               
+                $toValidate[$formField->column_name] = $formField->validation;
+            }
+            //$toValidate[$formField->column_name] = 'required';
         }
         $request->validate($toValidate);
         if($form->edit == 1){
             $resourceService = new ResourceService();
             $resourceService->update($form->table_name, $table, $id, $request->all() );
-            $request->session()->flash('message', 'Successfully edited ' . $form->name);
+            $request->session()->flash('exito', $form->name . ' actualizado correctamente.');
             return redirect()->route('resource.index', $table );
         }else{
             abort('401');
@@ -285,7 +306,7 @@ class ResourceController extends Controller
         if($form->delete == 1){
             if($request->has('marker')){
                 DB::table($form->table_name)->where('id', '=', $id)->delete();
-                $request->session()->flash('message', 'Successfully deleted element from: ' . $form->name);
+                $request->session()->flash('exito', $form->name . ' fue eliminado correctamente.');
                 return redirect()->route('resource.index', $table);
             }else{
                 return view('dashboard.resource.delete', ['table' => $table, 'id' => $id, 'formName' => $form->name]);

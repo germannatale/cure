@@ -11,6 +11,9 @@ use App\Models\Form;
 use App\Models\Models;
 use App\Models\Folder;
 use Illuminate\Support\Facades\DB;
+use PhpParser\JsonDecoder;
+use Illuminate\Support\Carbon as Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ResourceService{
 
@@ -79,18 +82,26 @@ class ResourceService{
                     'table' =>  $column->relation_table,
                     'column' => $name,
                     'thisTableColumn' => $column->column_name,
+                    //agrego si es requerida la relacion
+                    'required' => $column->validation ? str_contains($column->validation, 'required') : false
                 ));
             }
         }
         foreach($relations as $relation){
             $result['relation_' . $relation['thisTableColumn']] = DB::table($relation['table'])->select('id', $relation['column'] . ' AS name')->get();
-        }
+            if (!$relation['required']){
+                //agrego un objeto vacio al select si acepta nulos
+                $vacio = (object) array('id' => '', 'name' => '');
+                $result['relation_' . $relation['thisTableColumn']]->prepend($vacio);
+                 
+            }
+        }       
         return $result;
     }
 
     public function getIndexDatas($id){
         $form = Form::find($id);
-        $formFields = FormField::where('form_id', '=', $id)->where('browse', '=', '1')->get();
+        $formFields = FormField::where('form_id', '=', $id)->where('browse', '=', '1')->get();        
         $indexes = array();
         $relations = array();
         foreach($formFields as $field){
@@ -101,9 +112,32 @@ class ResourceService{
                     'column' => $field->relation_column,
                     'thisTableColumnName' => $field->column_name,
                 ));
-            }
+            }            
         }
         $table = DB::table($form->table_name);
+
+        // -----------------------------------------------------------------------
+        // --------------- Ojo chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
+        $fieldUserId = FormField::where('form_id', '=', $id)
+            ->where('column_name', '=', 'user_id')
+            ->first();
+        if($fieldUserId){
+            if ($form->name == 'Artefactos Genericos'){
+                // Artefactos genericos
+                $table->where('user_id', '=', null);
+            }
+            else{
+                // Mis artefactos
+                $table->where('user_id', '=', Auth::user()->id);
+            }            
+        }
+
+        // -----------------------------------------------------------------------
+        // --------------- Fin chanchada para filtrar por user_id ----------------
+        // -----------------------------------------------------------------------
+
         if(!empty($relations)){
             $table->addSelect($form->table_name . '.*');
         }
@@ -158,8 +192,11 @@ class ResourceService{
                 $toInsert[ $column->column_name ] = $this->addMedia($request, $column->column_name);
             }else{
                 $toInsert[ $column->column_name ] = $request[$column->column_name];
-            }
+            }           
         }
+        //agrego timestamps
+        $toInsert[ "created_at" ] = Carbon::now(); # new \Datetime()
+        $toInsert[ "updated_at" ] = Carbon::now(); # new \Datetime()
         DB::table($tableName)->insert($toInsert);
     }
 
@@ -211,12 +248,14 @@ class ResourceService{
                 }
             }
         }
+        //agrego timestamps       
+        $updateArray[ "updated_at" ] = Carbon::now(); # new \Datetime()
         DB::table($tableName)->where('id', '=', $tableId)->update( $updateArray );
     }
 
     public function show($formId, $tableName, $tableId){
         $form = Form::find($formId);
-        $formFields = FormField::where('form_id', '=', $formId)->where('browse', '=', '1')->get();
+        $formFields = FormField::where('form_id', '=', $formId)->where('read', '=', '1')->get();
         $indexes = array();
         $relations = array();
         foreach($formFields as $field){

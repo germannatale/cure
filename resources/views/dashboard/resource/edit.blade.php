@@ -10,31 +10,16 @@
 <div class="container-fluid">
   <div class="fade-in">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-12 col-md-6">
         <div class="card">
-          <div class="card-header"><h4>Edit {{ $form->name }}</h4></div>
-            <div class="card-body">
-                @if(Session::has('message'))
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
-                        </div>
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+          <div class="card-header"><h4>Editar {{ $form->name }}</h4></div>
+            <div class="card-body">               
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12">
+
                         <form method="POST" action="{{ route('resource.update', ['table' => $form->id, 'resource' => $id ] ) }}" enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
+                            @method('PUT')                            
                             @foreach($columns as $column)
                                 <?php
 
@@ -74,12 +59,15 @@
                                             echo '<label class="form-check-label">no</label>';
                                             echo '</div>';
                                         }else{
+                                            echo '<div class="form-group">';
                                             echo '<label>' . $column['name'] . '</label>';
                                             echo '<input type="' . $column['type'] . '" class="form-control" name="' . $column['column_name'] . '" value="' . $column['value'] .'">';
+                                            echo '</div>';
                                         }
                                     }elseif($column['type'] == 'relation_select'){
+                                        echo '<div class="form-group">';
                                         echo '<label>' . $column['name'] . '</label>';
-                                        echo '<select name="' . $column['column_name'] . '" class="form-control">';
+                                        echo '<select name="' . $column['column_name'] . '" class="form-control">';                                       
                                         foreach($relations['relation_' . $column['column_name']] as $relation){
                                             if($relation->id == $column['value']){
                                                 echo '<option selected value="' . $relation->id . '">' . $relation->name . '</option>';
@@ -88,6 +76,7 @@
                                             }
                                         }
                                         echo '</select>';
+                                        echo '</div>';
                                     }elseif($column['type'] == 'relation_radio'){
                                         echo '<label class="mt-3">' . $column['name'] . '</label>';
                                         foreach($relations['relation_' . $column['column_name']] as $relation){
@@ -118,19 +107,14 @@
                                     }
                                 ?>
                             @endforeach
-                            <button
-                                type="submit"
-                                class="btn btn-primary mt-3"
-                            >
-                                Save
+                            <button type="submit" class="btn btn-primary mt-3">
+                                <i class="fas fa-save"></i> Guardar
                             </button>
-                            <a 
-                                href="{{ route('resource.index', $form->id) }}"
-                                class="btn btn-primary mt-3"
-                            >
-                                Return
+                            <a href="{{ route('resource.index', $form->id) }}" class="btn btn-secondary mt-3">
+                                <i class="fas fa-backward"></i> Volver
                             </a>
                         </form>
+                        
                     </div>
                 </div>
             </div>
