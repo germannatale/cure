@@ -49,11 +49,11 @@
                                         </tr>
                                         <tr>
                                             <th>Proveedor Luz</th>
-                                            <td>{{$inmueble->luz_proveedor->nombre}}</td>
+                                            <td>{{$inmueble->luz_proveedor ? $inmueble->luz_proveedor->nombre : ''}}</td>
                                         </tr>
                                         <tr>
                                             <th>Proveedor Gas</th>
-                                            <td>{{$inmueble->gas_proveedor->nombre}}</td>
+                                            <td>{{$inmueble->gas_proveedor ? $inmueble->gas_proveedor->nombre : ''}}</td>
                                         </tr>
 
                                     </tbody>

@@ -118,7 +118,7 @@
                     <small class="text-muted text-uppercase font-weight-bold">Gasto Total</small>
                     <div class="progress progress-white progress-xs mt-3">
                         <div class="progress-bar" role="progressbar" 
-                            style="width: {{ $gastoTotal ? $consumoTotalkWh / $tarifaSeleccionada->consumo_maximo : 0 }}%" 
+                            style="width: {{ $gastoTotal ? $consumoTotalkWh * 100 / $tarifaSeleccionada->consumo_maximo : 0 }}%" 
                             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                         </div>
                     </div>
