@@ -30,7 +30,7 @@ class SimuladorController extends Controller
     {
         $energia = Energia::find($energia_id);       
         $inmueble = Inmueble::with('ambientes')->find($inmueble_id);
-        $artefactosParaAgregar = Artefacto::where('energia_id', $energia->id)->orderBy('nombre')->pluck('nombre', 'id');
+        $artefactosParaAgregar = Artefacto::where('user_id',Auth::user()->id)->where('energia_id', $energia->id)->orderBy('nombre')->pluck('nombre', 'id');
         $categorias = Categoria::where('energia_id', $energia->id)->orderBy('nombre')->get();
         return view('dashboard.simulador.index', compact('inmueble', 'artefactosParaAgregar' , 'energia', 'categorias'));
 

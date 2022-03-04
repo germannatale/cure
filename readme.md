@@ -26,13 +26,13 @@ docker-compose up -d
 docker exec -it cure_php composer install
 ```
 
+### Crear variables de entorno
+Crear archivo .env (puede renonbrar env.example)
+
 ### Generar llave unica para la app
 ```
 docker exec -it cure_php php artisan key:generate
 ```
-
-### Crear variables de entorno
-Crear .env (puede renonbrar env.example)
 
 ### Migrar datos a la DB
 ```
@@ -47,9 +47,10 @@ docker exec -it cure_php npm run dev
 
 ## Otros comandos útiles
 `docker exec -it cure_php php artisan migrate:fresh --seed` Restaura la DB
+`docker exec -it cure_php npm cache clean --force` Borra el cache de npm
 
 ## Pendientes
-* Simulacion de gas incompleta (No calcula costos y muestra mal las unidades)
+* Simulacion de gas incompleta (Calculo Costo | Unidades | Validaciones)
 * Registracion de usurios (falta implentar Maileable)
 * Pueden faltar algunas validaciones
 * Limpiar rutas

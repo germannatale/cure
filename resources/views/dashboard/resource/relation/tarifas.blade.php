@@ -104,11 +104,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="precio_fijo">Precio Fijo</label>
-                            <input type="number" class="form-control" name="precio_fijo" id="precio_fijo" placeholder="">
+                            <input type="number" class="form-control" step="0.01" name="precio_fijo" id="precio_fijo" placeholder="">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="precio_variable">Precio Variable</label>
-                            <input type="number" class="form-control" name="precio_variable" id="precio_variable" placeholder="">
+                            <input type="number" class="form-control" step="0.0001" name="precio_variable" id="precio_variable" placeholder="">
                         </div>                        
                     </div>
                     <input type="hidden" name="tarifario_id" value="{{ $tarifario->id }}">                    
